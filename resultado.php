@@ -39,3 +39,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      echo "Acesso no autorizado.";
 }
 ?>
+<!--Esto sirve para que en el fichero de respuesta tenga una URL
+para volver otra vez al fichero de la calculadora-->
+    <!--Al retornar el fichero al fichero calculdadora se hace 
+    mediante el metodo get lo que vuelve a inciializar otra vez
+    las variables de numero y operacion-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Retorno</title>
+</head>
+    <body>
+        <a href="Calculadora.php">
+            <p>Return a la calculadora</p>
+        </a>
+ 
+    </body>
+</html>
