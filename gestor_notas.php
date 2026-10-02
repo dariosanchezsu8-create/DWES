@@ -12,6 +12,18 @@ $aprobado=array_filter($alumnos,fn($n)=>$n>=5.0);
 
 ?>
 
+<?php
+//El usort solo entiendo 1,0,-1. Si queremos pasar el segundo valor
+//delante del primero la comparacion tiene que dar 1 y vicerversa.
+//si poner a<=>orden ascendente se queda con la A y viceversa.
+echo "<br>";
+$contador=0;
+usort($alumnos,fn($a,$b)=> $b["nota"]<=>$a["nota"]);
+    foreach($alumnos as $clave){
+        if($clave["nota"]>=5.0)
+            $contador++;
+    }
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,8 +34,9 @@ $aprobado=array_filter($alumnos,fn($n)=>$n>=5.0);
 </head>
         <body>
             <table border="1">
+                <h2>Notas Alumnos</h2>
                 <tr>
-                    <td colspan="2">Aprobados</td>
+                    <td colspan="2">Notas</td>
                 </tr>
                 <?php
                 //Fn es la abreviatura corta de funcion
@@ -40,11 +53,12 @@ $aprobado=array_filter($alumnos,fn($n)=>$n>=5.0);
             </table>
             <br></br>
             <br></br>
-            <br></br>
             <table border="1">
+                <h2>Estadísticas</h2>
                 <tr>
                     <td>Sumatorio Notas</td>
                     <td>Media Global</td>
+                    <td>Alumnos Aprobados</td>
                 </tr>
                 <tr>
                 <?php
@@ -62,6 +76,7 @@ $aprobado=array_filter($alumnos,fn($n)=>$n>=5.0);
                     <!--Asi es como se imprimen las variables-->
                     <td><?= $sumaTotal ?></td>
                     <td><?= $media ?></td>
+                    <td><?= $contador ?></td>                
                 </tr>
                 <?php
                 }
@@ -69,14 +84,3 @@ $aprobado=array_filter($alumnos,fn($n)=>$n>=5.0);
             </table>
         </body>
 </html>
-
-<?php
-//El usort solo entiendo 1,0,-1. Si queremos pasar el segundo valor
-//delante del primero la comparacion tiene que dar 1 y vicerversa.
-//si poner a<=>orden ascendente se queda con la A y viceversa.
-echo "<br>";
-usort($alumnos,fn($a,$b)=> $b["nota"]<=>$a["nota"]);
-    foreach($alumnos as $clave){
-        echo $clave["nombre"]."=".$clave["nota"]. "<br>";
-    }
-?>
