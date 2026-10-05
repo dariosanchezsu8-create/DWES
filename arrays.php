@@ -67,17 +67,17 @@ $gente=array(
     // var_dump($gente);
     // print_r($gente);
     foreach($gente as $personas){
-        foreach($personas as $unPersona){
+        echo "<ol>".$personas."</ol><br></br>";
+    foreach($personas as $unPersona){
+            echo $unPersona;
             if(is_string($unPersona)){
-                echo $unPersona." ";
+                echo $unPersona;
             }else {
-                  echo "<br>";
                 foreach($unPersona as $laPersona){
-                    echo $laPersona."<br>";
+                    echo "<li>".$laPersona."</li>";
                 }
         }
     }
-    echo "<br>";
 }
 
 ?>
