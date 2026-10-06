@@ -38,24 +38,83 @@
 // ecuacion_segunda(2,6,4);
 
 //PRACTICA EJERCICIO 3
-function esPalindromo(string $cadena):boolean{
+function esPalindromo(string $cadena):bool{
     //Las funciones se tiene que pasar sin punto porque sino
     //se estará concatenando la cadena con el resultado de esa
     //función
-    $cadena1=$stripslashes(trim($cadena));
+    $caracteres2=[];
+    //Va sobreescribiendo la variable cadena1
+    $cadena1=mb_strtolower($cadena);
+    $cadena1=stripslashes($cadena1);
+    $cadena1=str_replace(" ","",$cadena1);
     $caracteres=str_split($cadena1);
-    print_r($caracteres);
-    for($i=count($caracteres);$i>=0;$i--){
-    array_push($caracteres2,[$caracteres[$i]]);
+    for($i=count($caracteres)-1;$i>=0;$i--){
+    array_push($caracteres2,$caracteres[$i]);
 }
+ print_r($caracteres);
+ echo "<br>";
+ print_r($caracteres2);
  if($caracteres===$caracteres2){
     return true;
  }else{
     return false;
  }
+
 }
-print_r(esPalindromo("Yo no dono rosas"));
+//para muestrar un boolean no se puede imprimir con print_r
+//hay que utilizar var_dmp
+//var_dump(esPalindromo("Anita lava la tina"));
+//EJERCICIO 4
+function array_limite(array $numeros, int $limite){
+   $n=[];
+   foreach($numeros as $valor){
+      if($valor<$limite){
+         array_push($n,($valor));
+      }
+   }
+   print_r($n);
+}
+//array_limite([2,4,27,4,2,1,6],5);
+//EJERCICIO 5
 
+function validar_var($valor){
+   if(isset($valor)){
+      echo "La variable existe y es distinto de null";
+      if(is_string($valor)){
+         echo $valor." es un string";
+      }else{
+         if(is_int($valor))
+            echo $valor." es un entero";
+      }
+   }else{
+      echo "Entrada inválida";
+   }
+}
+function jugar_strings($valor){
+   $cadena=[];   
+   $token="+";
+if(isset($valor)){
+   $valor=strtolower($valor);
+   $longitud=strlen($valor);
+   $cadena=explode($token,$valor);
+   print_r($cadena);
+   }else{
+      echo "operación inválida";
+   }
 
+}
+//jugar_strings("Hola+mundo");
+//los array o funciones q trabajen con array no se puede imprimir
+//con echo sin con printl_r
+function jugar_arrays(array $cadena){  
+   print_r(array_values($cadena));
+   echo "<br>";
+    print_r(array_keys($cadena));
+   for($i=0;$i<count($cadena);$i++){
+        echo "Nombre: " . $cadena[$i]["nombre"] . "\n"; 
+        echo "Nota: " . $cadena[$i]["nota"] . "\n";
+   }
+}
+jugar_arrays([["nombre"=>"Mario","nota"=>8.5],["nombre"=>"Carlos","nota"=>9.83]]);
 
 ?>
