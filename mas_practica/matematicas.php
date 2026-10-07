@@ -24,6 +24,6 @@ if(is_numeric($opcion1) && is_numeric($opcion2)){
 }
 }
 }
-
+ecuacion_segunda(2,3,1);
 
 ?>
