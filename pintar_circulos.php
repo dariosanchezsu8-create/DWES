@@ -1,4 +1,5 @@
-<?php
+<?phpç
+session_start();
 //Para hacer los circulos haq que hacer una tabla
 // y poner la etiqueta circle 
 if($_SERVER["REQUEST_METHOD"]==="POST"){
@@ -11,6 +12,11 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
     echo "El numero de colores tiene que estar entre 4 y 8";
     
    }
+   //NADA MAS GENERAR LA COMBINACION ALEATORIO SE TIENE QUE GUARDAR
+   // ES AÑADIRLA EN UNA SESION PARA LUEGO PODER USARLA EN CUALQUIER
+   //MODULO DEL PROYECTO
+   //guardar la combinacion inciial
+   //arrancar variable de sesion y ahi guardamos el array inicial
  $colores= array(
     "azul"=>"#0000FF",
     "rojo"=>"#FF0000",
@@ -37,6 +43,7 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
                     for($i=0;$i<$n1;$i++){
                         $indice=array_rand($listaDef);
                         $colorDef=$listaDef[$indice];
+                        $combinacion_inicial[]=$colorDef;
 
                 ?>
                 <td>
@@ -44,14 +51,17 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
                         <circle cx="40" r="40" cy="40" fill="<?=$colorDef; ?>"></circle>
                     </svg>
                 </td>
-            <?php           
-                        }
+            <?php                           
+                    }
              }
+             $_SESSION['combinacion_inicial'];
+             var_dump($_SESSION['combinacion_inicial']);
             ?>
         </tr>
         <tr>
     </table>
         <button type="submit">Vamos a jugar!!!</button>
+
     </form>
     
 
