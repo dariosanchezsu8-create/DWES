@@ -7,7 +7,7 @@
 </head>
     <body>
         <h1>Bienvenida, al simon dice</h1>
-        <form action="pintar_circulos" method="POST">
+        <form action="pintar_circulos.php" method="POST">
             <label for="circulos">Numero de círculos</label>
             <input type="text" name="circulos"></input>     
             <br></br>            
