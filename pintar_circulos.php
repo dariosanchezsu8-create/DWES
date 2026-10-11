@@ -1,17 +1,24 @@
-<?phpç
+<?php
 session_start();
 //Para hacer los circulos haq que hacer una tabla
 // y poner la etiqueta circle 
 if($_SERVER["REQUEST_METHOD"]==="POST"){
- $n1=$_POST['circulos'] ?? 0;
- $n2=$_POST['colores']?? 0;
- if($n1<4 && $n1>8){
-    echo "El numero de circulos tiene que estar entre 4 y 8";
- }
- if($n2<4 && $n2>8){
-    echo "El numero de colores tiene que estar entre 4 y 8";
-    
-   }
+    $_SESSION['circulos'] = $_POST['circulos'] ?? 0;
+    $_SESSION['colores'] = $_POST['colores'] ?? 0;
+
+    $n1 = $_SESSION['circulos'];
+    $n2 = $_SESSION['colores'];
+ //validacion de datos entre 4-8
+ if($n1<4 || $n1>8){
+    echo "El numero de circulos tiene que estar entre 4 y 8"."<br>";
+    echo "<a href='interfaz.php'>Volver al formulario</a>";
+    exit;//Detiene la ejecucion para que no siga
+    }
+ if($n2<4 || $n2>8){
+    echo "El numero de colores tiene que estar entre 4 y 8"."<br>";
+    echo "<a href='interfaz.php'>Volver al formulario</a>";
+    exit;
+    }
    //NADA MAS GENERAR LA COMBINACION ALEATORIO SE TIENE QUE GUARDAR
    // ES AÑADIRLA EN UNA SESION PARA LUEGO PODER USARLA EN CUALQUIER
    //MODULO DEL PROYECTO
@@ -27,6 +34,7 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
     "morado"=>"#800080",
     "gris"=>"#808080",
  );
+ $_SESSION['paleta']=$colores;
 }
 ?>
  <form action="eleccion.php" method="POST">
@@ -38,12 +46,14 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
                     global $colores,$n1;
                     //se obtienen todos los valores del array inicial
                     $listaValores = array_values($colores);
+                    //listaDef seleccionado los colores primeros que diga n2
                     $listaDef=array_slice($listaValores,0,$n2);
 
                     for($i=0;$i<$n1;$i++){
+                        //crea un indice random dentro del rango 
                         $indice=array_rand($listaDef);
                         $colorDef=$listaDef[$indice];
-                        $combinacion_inicial[]=$colorDef;
+                        $combinacion_inicial=$colorDef;
 
                 ?>
                 <td>
@@ -53,9 +63,9 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
                 </td>
             <?php                           
                     }
-             }
-             $_SESSION['combinacion_inicial'];
-             var_dump($_SESSION['combinacion_inicial']);
+             $_SESSION['combi_inicial']=$combinacion_inicial;
+
+            }
             ?>
         </tr>
         <tr>

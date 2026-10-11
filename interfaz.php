@@ -1,3 +1,8 @@
+<?php
+//Iniciar sesion para que se guarde todos los valores en todos
+//los ficheros usados en el proyecto
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,3 +23,14 @@
         </form>
     </body>
 </html>
+
+
+<!--QUE HACER CON EL PROGRAMA
+1. ENTENDER EL CODIGO ->HECHO
+2. RESOLVER FALLOS
+     * HECHO<-VALIDACION DEL FORMULARIO INICIAL -> SE PONDRA UN BOTON PARA VOLVER A EMPEZAR
+     * AVERIGUAR PORQUE SE TRANSPASA DE UN FICHERO A OTRO EL FORMULARIO
+     * FALLO DE CIRCULOS EN NEGRO
+3. APRENDER SESSION E IMPLEMENTARLO
+4. CREAR OTRA PAGINA CON CIRCULOS NEGROS Y BOTONES
+   CON LOS COLORES ELEGIDOS---->
