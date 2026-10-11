@@ -14,6 +14,9 @@ $n1 = $_SESSION['circulos'] ?? 0;
 $n2 = $_SESSION['colores']?? 0;
 $combinacion_inicial=$_SESSION['combi_inicial'];
 $c[]=$_SESSION['paleta'];
+$listaDef=$_SESSION['listaf'];
+$listaK=$_SESSION['listaK'];
+$identificadores=[];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,13 +45,22 @@ $c[]=$_SESSION['paleta'];
         </tr>
         <tr>
             <?php
-               foreach($combinacion_inicial as $valor){
-                    $clave =array_search($valor,$c);
+               for($i=0;$i<$n2;$i++){
             ?>
             <td>
-                <button type="submit" style="background-color:<?= $valor;?>;"><?= $clave; ?></button>
+                <button type="submit" ?>name="btn_pulsado" value="<?= $identificadores[$i]; ?>""style="background-color:<?= $listaDef[$i];?>;width: 70px; height: 30px;"><?= $listaK[$i]; ?></button>
             </td>
      <?php        
+            }
+
+            for ($i = 0; $i < $listaDef2; $i++) {
+                for ($j = 0; $j < count($identificadores); $j++) {
+                     $id_actual = $identificadores[$j];
+                         if (isset($_GET['btn_pulsado']) === $id_actual) {
+                                $listaDef2[$i]=$c[$i];
+                    }
+                    break;
+                }
             }
         ?>
         </tr>   

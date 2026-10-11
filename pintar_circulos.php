@@ -46,8 +46,10 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
                     global $colores,$n1;
                     //se obtienen todos los valores del array inicial
                     $listaValores = array_values($colores);
+                    $listaClaves = array_Keys($colores);
                     //listaDef seleccionado los colores primeros que diga n2
                     $listaDef=array_slice($listaValores,0,$n2);
+                    $listaKey=array_slice($listaClaves,0,$n2);
 
                     for($i=0;$i<$n1;$i++){
                         //crea un indice random dentro del rango 
@@ -64,7 +66,8 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
             <?php                           
                     }
              $_SESSION['combi_inicial']=$combinacion_inicial;
-
+             $_SESSION['listaf']=$listaDef;
+             $_SESSION['listaK']=$listaKey;
             }
             ?>
         </tr>
