@@ -55,7 +55,7 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
                         //crea un indice random dentro del rango 
                         $indice=array_rand($listaDef);
                         $colorDef=$listaDef[$indice];
-                        $combinacion_inicial=$colorDef;
+                        $combinacion_inicial[]=$colorDef;
 
                 ?>
                 <td>

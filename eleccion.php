@@ -14,7 +14,6 @@ $inicial=[
     ];
 $n1 = $_SESSION['circulos'] ?? 0;
 $n2 = $_SESSION['colores']?? 0;
-$combinacion_inicial=$_SESSION['combi_inicial'];
 $c=$_SESSION['paleta'];
 $listaDef=$_SESSION['listaf'];
 $listaK=$_SESSION['listaK'];
@@ -33,9 +32,9 @@ $identificadores=[];
     <table>
         <tr>    
             <?php
-            $listaDef2=array_slice($inicial,0,$n2);
+            $combi=array_slice($inicial,0,$n2);
                 for($i=0;$i<$n1;$i++){
-                    $colorActual=$listaDef2[$i];
+                    $colorActual=$combi[$i];
             ?>
             <td>
                 <svg width="200" height="200">
@@ -54,7 +53,8 @@ $identificadores=[];
                 $identificadores=$id_actual;
             ?>
             <td>
-                <button type="submit" name='btn' value="<?= $id_actual ?>"style="background-color:<?= $listaDef[$i];?>; width: 70px; height: 30px;"><?= $listaK[$i]; ?></button>
+                <button type="submit" name='btn' value="<?= $id_actual ?>
+                "style="background-color:<?= $listaDef[$i];?>; width: 70px; height: 30px;"><?= $listaK[$i]; ?></button>
             </td>
      <?php        
                }
@@ -79,20 +79,17 @@ $identificadores=[];
 
             }
             /*
-            $combinacion_Final = [];
-            foreach($lote as $color){
-                    $combinacion_Final[]=$listaK[$color];
-            }
-            $_SESSION['combi_final']=$combinacion_Final;
-            for($i=0;$i<$n2;$i++){
-                $valor=$combinacion_Final;
-            }
-*/
+            Pintar el primero circulo 
+            actualizo el contenido de combi_final q este esta guardado en session
+            */
+                $jugada=[];
+                $lote=($_SESSION['lote']);
+                foreach($lote as $color){
+                    $jugada[]=$listaDef[$color];
+                }
+                $_SESSION['combi_Final']=$jugada;
+                var_dump($jugada);
             ?>
-            <td>
-                <br></br>
-                <input type="submit"></input>
-            </td>
             <!--
             <td>
                 <svg width="200" height="200">
