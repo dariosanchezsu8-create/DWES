@@ -47,6 +47,48 @@ $identificadores=[];
         </tr>
         <tr>
             <?php
+            //para que el lote se vacie
+            // Si el lote no existe, lo creamos vacío
+            if (!isset($_SESSION['lote'])) {
+                $_SESSION['lote'] = [];
+            }
+                if($_SERVER["REQUEST_METHOD"]==="POST"){
+                    //Hay que quitar el espacio de cada indice 
+                    if(isset($_POST['btn']) && count($_SESSION['lote'])<$n1){
+                        //solo añadimos si no hemo llegado a 4
+                    $valor=(int) trim($_POST['btn']);
+                $_SESSION['lote'][] = $valor;
+                    $lote=$_SESSION['lote'];
+                $jugada=[];
+                $lote=($_SESSION['lote']);
+                foreach($lote as $color){
+                    $jugada[]=$listaDef[$color];
+                }
+                $_SESSION['combi_Final']=$jugada;
+                }else{
+                    $_SESSION['lote']=[];
+
+            }
+                }
+            /*
+            Pintar el primero circulo 
+            actualizo el contenido de combi_final q este esta guardado en session
+            */
+                $jugada=$_SESSION["combi_Final"];
+                foreach($jugada as $valor){
+            ?>
+            <td>
+                <svg width="200" height="200">
+                    <circle cx="40" r="40" cy="40" fill="<?= $valor;?>"></circle>
+                </svg>
+            </td>
+                        <?php
+                 }
+                }
+                ?>
+        </tr>
+        <tr>
+            <?php
 
                for($i=0;$i<$n2;$i++){
                 $id_actual=$i;
@@ -60,50 +102,7 @@ $identificadores=[];
                }
         ?>
         </tr>   
-        <tr>
-            <?php
-            //para que el lote se vacie
-            // Si el lote no existe, lo creamos vacío
-            if (!isset($_SESSION['lote'])) {
-                $_SESSION['lote'] = [];
-            }
-                if($_SERVER["REQUEST_METHOD"]==="POST"){
-                    if(isset($_POST['btn']) && count($_SESSION['lote'])<$n1){
-                        //solo añadimos si no hemo llegado a 4
-                    $valor=$_POST['btn'];
-                $_SESSION['lote'][] = $valor;
-                    $lote=$_SESSION['lote'];
-                 var_dump($lote);
-                }else{
-                    $_SESSION['lote']=[];
-
-            }
-            /*
-            Pintar el primero circulo 
-            actualizo el contenido de combi_final q este esta guardado en session
-            */
-                $jugada=[];
-                $lote=($_SESSION['lote']);
-                foreach($lote as $color){
-                    $jugada[]=$listaDef[$color];
-                }
-                $_SESSION['combi_Final']=$jugada;
-                var_dump($jugada);
-            ?>
-            <!--
-            <td>
-                <svg width="200" height="200">
-                    <circle cx="40" r="40" cy="40" fill="<?= $valor;?>"></circle>
-                </svg>
-            </td>
--->
-            <?php
-
-                }
-                ?>
-        </tr>
     </table>
-
 </form>
 </body>
 </html>
