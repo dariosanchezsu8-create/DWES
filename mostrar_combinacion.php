@@ -14,7 +14,7 @@ $final=$_SESSION['combi_Final'];
 $contador=0;
 $_SESSION['contador']=$contador;
 
-for($i=0;$i<$n1;$i++){
+for($i=0;$i<$n1;$i++){ 
     if($inicial[$i]===$final[$i]){
         $_SESSION['contador']++;
         }
@@ -33,11 +33,11 @@ for($i=0;$i<$n1;$i++){
 <body>
     <?php
      if($_SESSION['contador']==$n1){    
-    echo '<h1>Enhorabuena Paco, has acertado<h1>';
+    echo '<h1>Enhorabuena Paco, has acertado 🎉✨✨</h1> ';
     session_destroy();   
      }else{    
     session_destroy();   
-    echo '<h1>Patrón equivocado<h1>';    
+    echo '<h1>Patrón equivocado 🧙🏿‍♂️🧙🏿‍♀️🧙🏿‍♂️</h1>';    
     }
     ?>
 
