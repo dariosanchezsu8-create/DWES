@@ -59,7 +59,7 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
 
                 ?>
                 <td>
-                    <svg width="200" height="200">
+                    <svg width="100" height="100">
                         <circle cx="40" r="40" cy="40" fill="<?=$colorDef; ?>"></circle>
                     </svg>
                 </td>
@@ -69,6 +69,7 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
              $_SESSION['listaf']=$listaDef;
              $_SESSION['listaK']=$listaKey;
             }
+
             ?>
         </tr>
         <tr>
