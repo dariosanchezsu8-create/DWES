@@ -37,7 +37,7 @@ for($i=0;$i<$n1;$i++){
     session_destroy();   
      }else{    
     session_destroy();   
-    echo '<h1>Patrón equivocado 🧙🏿‍♂️🧙🏿‍♀️🧙🏿‍♂️</h1>';    
+    echo '<h1>Patrón equivocado</h1>';    
     }
     ?>
 

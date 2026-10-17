@@ -4,8 +4,8 @@ session_start();
 //Recuperar variables de sesión de forma segura con valores por defecto
 $n1 = $_SESSION['circulos'] ?? 0;
 $n2 = $_SESSION['colores'] ?? 0;
-$listaDef = $_SESSION['listaf'];
-$listaK = $_SESSION['listaK'];
+$listaDef = $_SESSION['listaf'] ?? [];
+$listaK = $_SESSION['listaK'] ?? [];
 
 // Inicializar arrays en sesión si no existen
 if (!isset($_SESSION['lote'])) {
@@ -18,8 +18,8 @@ if (!isset($_SESSION['combi_Final'])) {
 // 2. Procesar la petición POST cuando se pulsa un botón de color
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST['reiniciar'])) {
-    $_SESSION['lote'] = [];
-    $_SESSION['combi_Final'] = [];
+        $_SESSION['lote'] = [];
+        $_SESSION['combi_Final'] = [];
     }
 
     if (isset($_POST['btn']) && count($_SESSION['lote']) < $n1) {
@@ -33,8 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
         }
         $_SESSION['combi_Final'] = $jugada;
-    
-}
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -52,52 +51,45 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <tr>
                 <?php 
                 for ($i = 0; $i < $n1; $i++){
+                    // Por defecto el círculo es negro
+                    $color_circulo = "#000000"; 
+                    
+                    // Si el usuario ya ha elegido un color para esta posición, lo sustituimos
+                    if (isset($_SESSION['combi_Final'][$i])) {
+                        $color_circulo = $_SESSION['combi_Final'][$i];
+                    }
                 ?>
                 <td>
                     <svg width="100" height="100">
-                        <circle cx="40" cy="40" r="40" fill="#000000"></circle>
+                        <circle cx="40" cy="40" r="40" fill="<?= $color_circulo; ?>"></circle>
                     </svg>
                 </td>
                 <?php 
                 }
-                 ?>
-            </tr>
-
-            <tr>
-                <?php 
-                $jugada = $_SESSION["combi_Final"];
-                foreach ($jugada as $color){
-                ?>
-                <td>
-                    <svg width="100" height="100">
-                        <circle cx="40" cy="40" r="40" fill="<?= $color; ?>"></circle>
-                    </svg>
-                </td>
-                <?php
-                }
                 ?>
             </tr>
 
+            <!-- FILA DE BOTONES DE COLORES -->
             <tr>
                 <?php 
                 for ($i = 0; $i < $n2; $i++){
                 ?>
                 <td>
-                    <button type="submit" name="btn" value="<?= $i; ?>" style="background-color: <?= $listaDef[$i]; ?>; width: 70px; height: 30px;">
-                        <?= $listaK[$i]; ?>
+                    <button type="submit" name="btn" value="<?= $i; ?>" style="background-color: <?= $listaDef[$i] ?? '#ccc'; ?>; width: 70px; height: 30px;">
+                        <?= $listaK[$i] ?? ''; ?>
                     </button>
                 </td>
                 <?php
                  }
-                 ?>
+                ?>
             </tr>
         </table>
-        <br></br>
-    <button type="submit" name="reiniciar">Reiniciar</button>
+        <br>
+        <button type="submit" name="reiniciar">Reiniciar</button>
    </form>
-    <br></br> 
+   <br> 
    <form action="mostrar_combinacion.php" method="POST">
-        <input type="submit"></input>
+        <input type="submit" value="Enviar combinación">
     </form>
 
 </body>
