@@ -12,7 +12,7 @@ if (!isset($_SESSION['lote'])) {
     $_SESSION['lote'] = [];
 }
 if (!isset($_SESSION['combi_Final'])) {
-    $_SESSION['combi_Final'] = [];
+    $_SESSION['combi_Final']  = [];
 }
 
 // 2. Procesar la petición POST cuando se pulsa un botón de color

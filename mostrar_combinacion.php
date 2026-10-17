@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 $n1=$_SESSION['circulos']?? 0;
 $inicial=$_SESSION['combi_inicial'];
 $final=$_SESSION['combi_Final'];
-$contador=0;
+$contador=0; 
 $_SESSION['contador']=$contador;
 
 for($i=0;$i<$n1;$i++){ 
