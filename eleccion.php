@@ -69,7 +69,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 ?>
             </tr>
 
-            <!-- FILA DE BOTONES DE COLORES -->
             <tr>
                 <?php 
                 for ($i = 0; $i < $n2; $i++){

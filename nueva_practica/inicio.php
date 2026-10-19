@@ -36,14 +36,20 @@
 
         if(!isset($_POST['incrementar'])){
             $_SESSION['emojis']=[];
-            $_SESSION['pulsaciones']=1;
+            $_SESSION['pulsaciones']=0;
         }else{
-            if($_SESSION['pulsaciones']<4){            
+            if($_SESSION['pulsaciones']<=3){   
+                if($_SESSION['emojis'][$_SESSION['pulsaciones']]===0){
+                $_SESSION['emojis'][$_SESSION['pulsaciones']]=[$imagenes[0]];
+                $_SESSION['pulsaciones']++;
+                print_r($_SESSION['pulsaciones']);
+                }else{   
             $_SESSION['emojis'][$_SESSION['pulsaciones']]=$imagenes[$_SESSION['pulsaciones']];
             $_SESSION['pulsaciones']++;
+
             }
+          }
         }
-        print_r($_SESSION['pulsaciones']);
         if(isset($_POST['grabar'])){
             $_SESSION['pulsaciones'];
 

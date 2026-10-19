@@ -18,6 +18,7 @@ session_start();
             <table style="border: 2px solid #000000;">
                 <tr>
                     <?php
+//                    $pulsaciones=$_SESSION['pulsaciones']++;
                     for($i=0;$i<$_SESSION['pulsaciones'];$i++){
                     ?>
                     <td style="border: 2px solid #000000;">
