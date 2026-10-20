@@ -30,7 +30,7 @@ for($i=0;$i<$n1;$i++){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
+<body style="background-color:<?=$_COOKIE['col'] ?? "#808080"; ?>;">
     <?php
      if($_SESSION['contador']==$n1){    
     echo '<h1>Enhorabuena Paco, has acertado 🎉✨✨</h1> ';

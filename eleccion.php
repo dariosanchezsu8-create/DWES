@@ -7,6 +7,7 @@ $n2 = $_SESSION['colores'] ?? 0;
 $listaDef = $_SESSION['listaf'] ?? [];
 $listaK = $_SESSION['listaK'] ?? [];
 
+
 // Inicializar arrays en sesión si no existen
 if (!isset($_SESSION['lote'])) {
     $_SESSION['lote'] = [];
@@ -43,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Imita el patrón</title>
 </head>
-<body>
+<body style="background-color:<?=$_COOKIE['col'] ?? "#808080";?>;">
     <h1>Imita el patrón</h1>
     
     <form action="" method="POST">

@@ -19,6 +19,41 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
     echo "<a href='interfaz.php'>Volver al formulario</a>";
     exit;
     }
+    $tmpExpiracion=time()+(86400*30);
+    // if(isset($_POST['color'])){
+    //     $color=$_POST['color'];
+    //     setcookie('colo',$color,[
+    //         'expires'=> $tExpiracion
+    //     ]);
+    //  }else{
+    //     setcookie('colo',$color,[
+    //         'expires'=> $tExpiracion,
+    //         'path' =>'/'
+    //     ]);
+    //  }
+    if(isset($_POST['color'])&& trim($_POST['color']) !== ''){
+        $color=$_POST['color'];
+        setcookie('col',$color,[
+            'expires' => $tmpExpiracion,
+            'path' => '/'
+        ]);
+        $colorFinal=$color;
+        $_COOKIE['col']=$color;
+    }else{
+        $colorFinal = $_COOKIE['col'];
+              setcookie('col',$colorFinal,[
+            'expires' => $tmpExpiracion,
+            'path' => '/'
+        ]);
+
+
+    }
+
+
+
+
+     
+
    //NADA MAS GENERAR LA COMBINACION ALEATORIO SE TIENE QUE GUARDAR
    // ES AÑADIRLA EN UNA SESION PARA LUEGO PODER USARLA EN CUALQUIER
    //MODULO DEL PROYECTO
@@ -37,6 +72,14 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
  $_SESSION['paleta']=$colores;
 }
 ?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imita el patrón</title>
+</head>
+<body style="background-color:<?=$_COOKIE['col'] ?? '#808080"'; ?>;">
  <form action="eleccion.php" method="POST">
     <h1>COLORES SELECCIONADOS</h1>
     <table>
@@ -77,7 +120,8 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
         <button type="submit">Vamos a jugar!!!</button>
 
     </form>
-    
+    </body>
+</html>
 
 
 
