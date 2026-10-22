@@ -28,6 +28,7 @@
             return $pwdErr;
         }
         $imagenes = [
+            "https://img.magnific.com/vector-gratis/ilustracion-emojis-escuchar-musica_23-2151298389.jpg?semt=ais_hybrid&w=100&q=80",
             "https://img.magnific.com/psd-gratis/emoji-llorando-3d_84443-82658.jpg?semt=ais_hybrid&w=100&q=80",
             "https://img.magnific.com/vector-gratis/ilustracion-emojis-aburridos-gradiente_23-2150769977.jpg?semt=ais_hybrid&w=100&q=80",
             "https://img.magnific.com/vector-gratis/ilustracion-emoji-odio-gradiente_52683-148484.jpg?semt=ais_hybrid&w=100&q=80",
@@ -36,14 +37,9 @@
 
         if(!isset($_POST['incrementar'])){
             $_SESSION['emojis']=[];
-            $_SESSION['pulsaciones']=0;
+            $_SESSION['pulsaciones']=1;
         }else{
-            if($_SESSION['pulsaciones']<=3){   
-                if($_SESSION['emojis'][$_SESSION['pulsaciones']]===0){
-                $_SESSION['emojis'][$_SESSION['pulsaciones']]=[$imagenes[0]];
-                $_SESSION['pulsaciones']++;
-                print_r($_SESSION['pulsaciones']);
-                }else{   
+            if($_SESSION['pulsaciones']<=4){   
             $_SESSION['emojis'][$_SESSION['pulsaciones']]=$imagenes[$_SESSION['pulsaciones']];
             $_SESSION['pulsaciones']++;
 
@@ -51,11 +47,10 @@
           }
         }
         if(isset($_POST['grabar'])){
+            
             $_SESSION['pulsaciones'];
 
         }
-
-    }
 ?>
 
 
