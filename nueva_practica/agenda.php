@@ -38,7 +38,7 @@ if (!isset($_SESSION['pulsaciones'])) {
 <!--Si pones el boton en otro formulario distinto de los inputs
 al darle al boton si pasara de pantalla pero los inputs no
 al esta en otro formulario independiente-->
-    <button type="submit" name="gr">Grabar<button>
+    <button type="submit" name="gr">Grabar</button>
     </form>
 </body>
 </html>

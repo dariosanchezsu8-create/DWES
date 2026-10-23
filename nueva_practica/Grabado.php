@@ -18,7 +18,6 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
             $contador++;
             }
               //$_SESSION['contador']=$contador;
-              print_r($_SESSION['contador']);
         }
     }
 }
@@ -33,7 +32,7 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
 <body>
     <h1>Agenda</h1>    
     <p style="background-color:font-weight:bold; font-size:20px;">Hola <?= $_SESSION['nombre']; ?></p>
-    <p></p>
+    <p>Se han grabado los <?=$_SESSION['contador'] ?> de <?= $_SESSION['nombre'] ?></p>
     <a href="index.php">Volver a loguearse</a>
     <br></br>
     <a href="agenda.php">Introducir más contactos para <?=$_SESSION['nombre']; ?></a>
