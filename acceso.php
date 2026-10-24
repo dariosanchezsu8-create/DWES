@@ -1,27 +1,32 @@
 <?php
-if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['iniciar_sesion'])) {
-    $usuario = $_POST['usuario'];
-    $clave = $_POST['clave'];
+session_start();
+require_once 'conexion.php';
+if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if(isset($_POST['nombre'])&& isset($_POST['pwd'])){
+    $usuario = $_POST['nombre'];
+    $clave = $_POST['pwd'];
 
-    // Aquí puedes agregar la lógica para verificar el usuario y la clave en la base de datos
-    // Por ejemplo, podrías usar PDO para consultar la tabla de usuarios
-
-    // Supongamos que la verificación es exitosa
-    if($usuario === 'admin' && $clave === '1234') {
-        session_start();
-        $_SESSION['usuario'] = $usuario;
+    $sql ="SELECT nombre , contra FROM USUARIOS";
+    $stmt=$pdo->prepare($sql);
+     $stmt->execute();
+    while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    if($fila['nombre']==$_POST['nombre'] && $fila['contrasenia']==$_POST['pwd']) {
         header('Location: interfaz.php'); // Redirige a la página de interfaz
     } else {
         echo "<p style='color:red;'>Usuario o clave incorrectos.</p>";
     }
-
-    if(isset($_POST['registrar'])) {
-        header('Location: registro.php'); // Redirige a la página de registro
-        exit();
-        }
-
-
+    }
 }
+}
+/*
+Aqui en primer lugar el usuario metera los datos donde corresponda
+despues se comprobara con un select si existe el usuario en la base de datos
+en caso de que no saltara un error de registrarse.
+En caso de que si entonces con el boton Iniciar Sesion entrenara
+en el juego del simon dice
+*/
+
+
 
 
 ?>
@@ -33,15 +38,18 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['iniciar_sesion'])) {
     <title>Document</title>
 </head>
 <body>
+    <h1>REGISTRO USUARIO</h1>
     <form action="" method="POST">
         <label for="usuario">Usuario</label>
-        <input type="text" name="usuario">
+        <input type="text" name="nombre">
         <br></br>
         <label for="clave">Clave</label>
-        <input type="password" name="clave">
+        <input type="password" name="pwd">
         <br></br>
-        <button type="submit" name="registrar">Registrar</button>
         <button type="submit" name="iniciar_sesion">Iniciar Sesión</button>
+    </form>
+    <form action="registro.php" method="POST">
+        <button type="submit" name="registrar">Registrar</button>
     </form>
 </body>
 </html>
