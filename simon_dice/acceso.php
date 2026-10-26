@@ -1,24 +1,31 @@
 <?php
-require_once 'conexion.php';
 session_start();
 require_once 'conexion.php';
+try{
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(isset($_POST['nombre'])&& isset($_POST['pwd'])){
     $usuario = $_POST['nombre'];
     $clave = $_POST['pwd'];
 
-    $sql ="SELECT nombre , contra FROM USUARIOS";
+    $sql ="SELECT Nombre , Clave FROM usuarios";
     $stmt=$pdo->prepare($sql);
      $stmt->execute();
     while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    if($fila['nombre']==$_POST['nombre'] && $fila['contrasenia']==$_POST['pwd']) {
+    if($fila['Nombre']==$usuario && $fila['Clave']==$clave) {
         header('Location: interfaz.php'); // Redirige a la página de interfaz
     } else {
         echo "<p style='color:red;'>Usuario o clave incorrectos.</p>";
-    }
-    }
-}
-}
+        break;
+        }
+       
+      }
+     }
+  }
+}catch(PDOException $e){
+            
+        echo "<p style='color:red;'>Error </p>". $e->getMessage();
+
+        }   
 /*
 Aqui en primer lugar el usuario metera los datos donde corresponda
 despues se comprobara con un select si existe el usuario en la base de datos
@@ -50,7 +57,7 @@ en el juego del simon dice
         <button type="submit" name="iniciar_sesion">Iniciar Sesión</button>
     </form>
     <form action="registro.php" method="POST">
-        <button type="submit" name="registrar">Registrar</button>
+        <button type="submit" name="registrar">Registrarse</button>
     </form>
 </body>
 </html>

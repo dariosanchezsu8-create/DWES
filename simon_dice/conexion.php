@@ -1,7 +1,7 @@
 <?php
 // Parámetros de conexión
 $host = 'localhost';
-$dbname = 'agenda';
+$dbname = 'bdsimon';
 $usuario = 'root';
 $clave = '';
 // 1. Cadena DSN (Data Source Name)
