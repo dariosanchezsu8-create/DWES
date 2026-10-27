@@ -70,7 +70,7 @@ for($i=0;$i<$n1;$i++){
             ?>
         </tr>
     </table>
-          <form action="interfaz.php" method="POST">
+          <form action="acceso.php" method="POST">
             <button type="submit">Volver a jugar</button>
          </form>
 </body>

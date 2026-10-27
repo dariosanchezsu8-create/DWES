@@ -6,26 +6,35 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(isset($_POST['nombre'])&& isset($_POST['pwd'])){
     $usuario = $_POST['nombre'];
     $clave = $_POST['pwd'];
-
-    $sql ="SELECT Nombre , Clave FROM usuarios";
+    var_dump($usuario);
+    var_dump($clave);
+    $sql ="SELECT Nombre , Clave,Rol FROM usuarios";
     $stmt=$pdo->prepare($sql);
      $stmt->execute();
     while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
     if($fila['Nombre']==$usuario && $fila['Clave']==$clave) {
-        header('Location: interfaz.php'); // Redirige a la página de interfaz
-    } else {
-        echo "<p style='color:red;'>Usuario o clave incorrectos.</p>";
-        break;
+        if($fila['Rol']==0){
+            $tiene=true;
+            header('Location: interfaz.php'); // Redirige a la página de interfaz
+            exit();
+        }else{
+            $tiene=false;
+            header("Location: seguridad.php");
+            exit();    
         }
-       
+        $_SESSION['tener']=$tiene;
+   } else {
+         echo "<p style='color:red;'>Usuario o clave incorrectos.</p>";
+        }
+
       }
      }
   }
 }catch(PDOException $e){
-            
+
         echo "<p style='color:red;'>Error </p>". $e->getMessage();
 
-        }   
+        }
 /*
 Aqui en primer lugar el usuario metera los datos donde corresponda
 despues se comprobara con un select si existe el usuario en la base de datos
