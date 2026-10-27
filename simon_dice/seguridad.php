@@ -2,11 +2,8 @@
 session_start();
 require_once 'conexion.php';
 //function filtrar_acceso(){
-        var_dump($_SESSION['tener']);
     if($_SERVER['REQUEST_METHOD']=="POST"){
     if(!$_SESSION['tener']){
-            header('Location: acceso.php');
-        }else{
             if(isset($_POST['circulos']) && isset($_POST['colores'])){
                 $_SESSION['crcl']=$_POST['circulos'];
                 $_SESSION['clr']=$_POST['colores'];
@@ -19,22 +16,21 @@ require_once 'conexion.php';
                 ':numCi' => $crcl,
                 ':numC' => $clr
                 ]);
+                header('Location: pintar_circulos.php');
             }else{
-                echo 'Error compilación';
+                header('Location: acceso.php');
             }
-        }
+    }else{
+        echo 'Error compilación';
+    }
     
 }
-
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=º, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
 <body>
@@ -49,9 +45,7 @@ require_once 'conexion.php';
             <label for="color">Color </label>
             <input type="text" name="color">
             <br></br>
-        </form>
-        <form action="pintar_colores.php" method="POST">
-            <button type="submit">Jugar!!!</button
+            <button type="submit">Jugar!!!</button>
         </form>
 </body>
 </html>

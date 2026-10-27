@@ -2,22 +2,32 @@
 session_start();
 //Para hacer los circulos haq que hacer una tabla
 // y poner la etiqueta circle 
+$n1=0;
+$n2=0;
 if($_SERVER["REQUEST_METHOD"]==="POST"){
+  
+    if(isset($_SESSION['clr']) && isset($_SESSION['crcl'])){
+        $n1=$_SESSION['crcl'];
+        $n2=$_SESSION['clr'];
+    var_dump($_SESSION['clr']);
+    var_dump($_SESSION['crcl']);
+    }else{
     $_SESSION['circulos'] = $_POST['circulos'] ?? 0;
     $_SESSION['colores'] = $_POST['colores'] ?? 0;
 
     $n1 = $_SESSION['circulos'];
     $n2 = $_SESSION['colores'];
+    }
  //validacion de datos entre 4-8
  if($n1<4 || $n1>8){
     echo "El numero de circulos tiene que estar entre 4 y 8"."<br>";
     echo "<a href='interfaz.php'>Volver al formulario</a>";
-    exit;//Detiene la ejecucion para que no siga
+    exit();//Detiene la ejecucion para que no siga
     }
  if($n2<4 || $n2>8){
     echo "El numero de colores tiene que estar entre 4 y 8"."<br>";
     echo "<a href='interfaz.php'>Volver al formulario</a>";
-    exit;
+    exit();
     }
     $tmpExpiracion=time()+(86400*30);
     // if(isset($_POST['color'])){
@@ -45,7 +55,6 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
             'expires' => $tmpExpiracion,
             'path' => '/'
         ]);
-
 
     }
 
