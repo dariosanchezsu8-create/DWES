@@ -21,6 +21,29 @@ $final=$_SESSION['combi_Final'] ?? [];
 //       }
 //    }
 //}
+
+
+if($_SERVER['REQUEST_METHOD']==="POST"){
+//2.Comprobar que el usuario existe con la select
+ $sql ="SELECT Codigo, Nombre , Clave FROM USUARIOS";
+  $stmt=$pdo->prepare($sql);
+  $stmt->execute();
+$existe=false;
+while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    if($fila['Nombre']==$_SESSION['user'] && $fila['Clave']==$_SESSION['passwrd']){
+        echo 'Usuario válido';
+        $usuNuevo3=$fila['Codigo'];
+        $contra3=1;
+        //3.Hacer el insert del acierto en la tabla de jugadas
+        $sql ="INSERT INTO jugadas (codigousu,acierto) VALUES (:codUsu,:acierto)";
+        $stmt=$pdo->prepare($sql);
+        $stmt->execute([
+        ':codUsu' => $usuNuevo3,
+        ':acierto' => $contra3,
+        ]);
+    }
+}
+}
 ?>
 
 <!DOCTYPE html>
@@ -73,7 +96,7 @@ $final=$_SESSION['combi_Final'] ?? [];
     <br></br>
     <p>Se ha guardado en la base de datos (acierto=0)</p>
     <br></br>
-          <form action="acceso.php" method="POST">
+          <form action="interfaz.php" method="POST">
             <button type="submit">Volver a jugar</button>
          </form>
          <form action="estadistica.php" method="POST">

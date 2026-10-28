@@ -1,8 +1,32 @@
 <?php
+require_once 'conexion.php';
 session_start();
 $n1=$_SESSION['n_uno'] ?? 0;
 $inicial=$_SESSION['combi_inicial'] ?? [];
 $final=$_SESSION['combi_Final'] ?? [];
+
+if($_SERVER['REQUEST_METHOD']==="POST"){
+//2.Comprobar que el usuario existe con la select
+ $sql ="SELECT Codigo, Nombre , Clave FROM USUARIOS";
+  $stmt=$pdo->prepare($sql);
+  $stmt->execute();
+$existe=false;
+while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    if($fila['Nombre']==$_SESSION['user'] && $fila['Clave']==$_SESSION['passwrd']){
+        echo 'Usuario válido';
+        $usuNuevo2=$fila['Codigo'];
+        $contra2=1;
+        //3.Hacer el insert del acierto en la tabla de jugadas
+        $sql ="INSERT INTO jugadas (codigousu,acierto) VALUES (:codUsu,:acierto)";
+        $stmt=$pdo->prepare($sql);
+        $stmt->execute([
+        ':codUsu' => $usuNuevo2,
+        ':acierto' => $contra2,
+        ]);
+    }
+}
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +55,7 @@ $final=$_SESSION['combi_Final'] ?? [];
     </table>
     <br></br>
         <p>Se ha guardado en la base de datos (acierto=1)</p>
-          <form action="acceso.php" method="POST">
+          <form action="interfaz.php" method="POST">
             <button type="submit">Volver a jugar</button>
          </form>
          <form action="estadistica.php" method="POST">
