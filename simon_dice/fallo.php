@@ -1,26 +1,26 @@
 <?php
 session_start();
-$n1=$_SESSION['circulos'];
-$inicial=$_SESSION['combi_inicial'];
-$final=$_SESSION['combi_Final'];
+$n1=$_SESSION['n_uno'] ?? 0;
+$inicial=$_SESSION['combi_inicial'] ?? [];
+$final=$_SESSION['combi_Final'] ?? [];
 
-//EN ESTE ULTIMO FICHERO SE COMPARARÁ LAS DOS COMBINACIONES
-// E IMPRIMIR UN MENSAJE CUAL SEA
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    if(isset($_SESSION['combi_inicial']) && isset($_SESSION['combi_Final'])){
-$n1=$_SESSION['circulos']?? 0;
-$inicial=$_SESSION['combi_inicial'];
-$final=$_SESSION['combi_Final'];
-$contador=0; 
-$_SESSION['contador']=$contador;
+// //EN ESTE ULTIMO FICHERO SE COMPARARÁ LAS DOS COMBINACIONES
+// // E IMPRIMIR UN MENSAJE CUAL SEA
+// if ($_SERVER["REQUEST_METHOD"] === "POST") {
+//     if(isset($_SESSION['combi_inicial']) && isset($_SESSION['combi_Final'])){
+// $n1=$_SESSION['circulos']?? 0;
+// $inicial=$_SESSION['combi_inicial'];
+// $final=$_SESSION['combi_Final'];
+// $contador=0; 
+// $_SESSION['contador']=$contador;
 
-for($i=0;$i<$n1;$i++){ 
-    if($inicial[$i]===$final[$i]){
-        $_SESSION['contador']++;
-        }
-      }
-   }
-}
+// for($i=0;$i<$n1;$i++){ 
+//     if($inicial[$i]===$final[$i]){
+//         $_SESSION['contador']++;
+//         }
+//       }
+//    }
+//}
 ?>
 
 <!DOCTYPE html>
@@ -32,15 +32,15 @@ for($i=0;$i<$n1;$i++){
 </head>
 <body style="background-color:<?=$_COOKIE['col'] ?? "#808080"; ?>;">
     <?php
-     if($_SESSION['contador']==$n1){    
-    echo '<h1>Enhorabuena Paco, has acertado 🎉✨✨</h1> ';
-    session_destroy();   
-     }else{    
-    session_destroy();   
-    echo '<h1>Patrón equivocado</h1>';    
-    }
+    //  if($_SESSION['contador']==$n1){    
+    // echo '<h1>Enhorabuena Paco, has acertado 🎉✨✨</h1> ';
+    // session_destroy();   
+    //  }else{    
+    // session_destroy();   
+    // echo '<h1>Patrón equivocado</h1>';    
+    // }
     ?>
-
+ <h1>Patrón equivocado❌❗❗</h1>    
    <table>
         <tr>
             <?php
@@ -70,8 +70,14 @@ for($i=0;$i<$n1;$i++){
             ?>
         </tr>
     </table>
+    <br></br>
+    <p>Se ha guardado en la base de datos (acierto=0)</p>
+    <br></br>
           <form action="acceso.php" method="POST">
             <button type="submit">Volver a jugar</button>
          </form>
+         <form action="estadistica.php" method="POST">
+            <button type="submit">Estadística</button>
+        </form>
 </body>
 </html>

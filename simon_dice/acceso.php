@@ -1,4 +1,11 @@
 <?php
+// 1. Abrimos la puerta de la sesión que trae el navegador
+session_start();
+// 2. Limpiamos todas las variables que había dentro (como 'tener', 'crcl', etc.)
+session_unset(); 
+// 3. Destruimos la sesión por completo
+session_destroy(); 
+// (Opcional) Si quieres volver a empezar una sesión limpia para el nuevo juego:
 session_start();
 require_once 'conexion.php';
 try{

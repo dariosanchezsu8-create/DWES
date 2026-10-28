@@ -1,19 +1,19 @@
 <?php
 session_start();
+//Al enviar los datos por el header location estos no se envian
+//por el metodo post si no con el metodo GET
 //Para hacer los circulos haq que hacer una tabla
 // y poner la etiqueta circle 
 $n1=0;
 $n2=0;
-if($_SERVER["REQUEST_METHOD"]==="POST"){
-  
+if($_SERVER["REQUEST_METHOD"]==="GET"){
     if(isset($_SESSION['clr']) && isset($_SESSION['crcl'])){
         $n1=$_SESSION['crcl'];
         $n2=$_SESSION['clr'];
-    var_dump($_SESSION['clr']);
-    var_dump($_SESSION['crcl']);
-    }else{
-    $_SESSION['circulos'] = $_POST['circulos'] ?? 0;
-    $_SESSION['colores'] = $_POST['colores'] ?? 0;
+    }
+}else{
+    $_SESSION['circulos']= $_POST['circulos'] ?? 0;
+    $_SESSION['colores']= $_POST['colores'] ?? 0;
 
     $n1 = $_SESSION['circulos'];
     $n2 = $_SESSION['colores'];
@@ -29,6 +29,8 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
     echo "<a href='interfaz.php'>Volver al formulario</a>";
     exit();
     }
+    $_SESSION['n_uno']=$n1;
+    $_SESSION['n_dos']=$n2;
     $tmpExpiracion=time()+(86400*30);
     // if(isset($_POST['color'])){
     //     $color=$_POST['color'];
@@ -50,7 +52,7 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
         $colorFinal=$color;
         $_COOKIE['col']=$color;
     }else{
-        $colorFinal = $_COOKIE['col'];
+        $colorFinal = $_COOKIE['col'] ?? '';
               setcookie('col',$colorFinal,[
             'expires' => $tmpExpiracion,
             'path' => '/'
@@ -69,7 +71,7 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
     "gris"=>"#808080",
  );
  $_SESSION['paleta']=$colores;
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -78,7 +80,7 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Imita el patrón</title>
 </head>
-<body style="background-color:<?=$_COOKIE['col'] ?? '#808080"'; ?>;">
+<body style="background-color:<?=$_COOKIE['col'] ?? '#808080'; ?>;">
  <form action="eleccion.php" method="POST">
     <h1>COLORES SELECCIONADOS</h1>
     <table>

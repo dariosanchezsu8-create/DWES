@@ -2,8 +2,8 @@
 session_start();
 
 //Recuperar variables de sesión de forma segura con valores por defecto
-$n1 = $_SESSION['circulos'] ?? 0;
-$n2 = $_SESSION['colores'] ?? 0;
+$n1 = $_SESSION['n_uno'] ?? 0;
+$n2 = $_SESSION['n_dos'] ?? 0;
 $listaDef = $_SESSION['listaf'] ?? [];
 $listaK = $_SESSION['listaK'] ?? [];
 
@@ -88,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <button type="submit" name="reiniciar">Reiniciar</button>
    </form>
    <br> 
-   <form action="mostrar_combinacion.php" method="POST">
+   <form action="decision.php" method="POST">
         <input type="submit" value="Enviar combinación">
     </form>
 
