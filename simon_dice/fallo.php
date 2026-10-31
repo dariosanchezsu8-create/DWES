@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once 'conexion.php';
 $n1=$_SESSION['n_uno'] ?? 0;
 $inicial=$_SESSION['combi_inicial'] ?? [];
 $final=$_SESSION['combi_Final'] ?? [];
@@ -23,23 +24,23 @@ $final=$_SESSION['combi_Final'] ?? [];
 //}
 
 
-if($_SERVER['REQUEST_METHOD']==="POST"){
+if($_SERVER['REQUEST_METHOD']==="GET"){
 //2.Comprobar que el usuario existe con la select
- $sql ="SELECT Codigo, Nombre , Clave FROM USUARIOS";
-  $stmt=$pdo->prepare($sql);
-  $stmt->execute();
-$existe=false;
+$sql = "SELECT Codigo, Nombre, Clave FROM usuarios ";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
 while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    if($fila['Nombre']==$_SESSION['user'] && $fila['Clave']==$_SESSION['passwrd']){
+    if($fila['Clave'] == $_SESSION['psswrd']){
         echo 'Usuario válido';
+        echo $fila['Codigo'];
         $usuNuevo3=$fila['Codigo'];
-        $contra3=1;
+        $fallo=0;
         //3.Hacer el insert del acierto en la tabla de jugadas
-        $sql ="INSERT INTO jugadas (codigousu,acierto) VALUES (:codUsu,:acierto)";
-        $stmt=$pdo->prepare($sql);
+        $sql_insert ="INSERT INTO jugadas (codigousu,acierto) VALUES (:codUsu,:fallo)";
+        $stmt=$pdo->prepare($sql_insert);
         $stmt->execute([
         ':codUsu' => $usuNuevo3,
-        ':acierto' => $contra3,
+        ':fallo' => $fallo
         ]);
     }
 }
@@ -96,7 +97,7 @@ while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
     <br></br>
     <p>Se ha guardado en la base de datos (acierto=0)</p>
     <br></br>
-          <form action="interfaz.php" method="POST">
+          <form action="interfaz.php" method="GET">
             <button type="submit">Volver a jugar</button>
          </form>
          <form action="estadistica.php" method="POST">

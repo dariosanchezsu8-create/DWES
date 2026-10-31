@@ -5,23 +5,22 @@ $n1=$_SESSION['n_uno'] ?? 0;
 $inicial=$_SESSION['combi_inicial'] ?? [];
 $final=$_SESSION['combi_Final'] ?? [];
 
-if($_SERVER['REQUEST_METHOD']==="POST"){
+if($_SERVER['REQUEST_METHOD']==="GET"){
 //2.Comprobar que el usuario existe con la select
- $sql ="SELECT Codigo, Nombre , Clave FROM USUARIOS";
+ $sql ="SELECT Codigo, Nombre , Clave FROM usuarios";
   $stmt=$pdo->prepare($sql);
   $stmt->execute();
-$existe=false;
 while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    if($fila['Nombre']==$_SESSION['user'] && $fila['Clave']==$_SESSION['passwrd']){
+    if($fila['Clave']==$_SESSION['psswrd']){
         echo 'Usuario válido';
         $usuNuevo2=$fila['Codigo'];
-        $contra2=1;
+        $acierto=1;
         //3.Hacer el insert del acierto en la tabla de jugadas
-        $sql ="INSERT INTO jugadas (codigousu,acierto) VALUES (:codUsu,:acierto)";
-        $stmt=$pdo->prepare($sql);
+        $sql_insert ="INSERT INTO jugadas (codigousu,acierto) VALUES (:codUsu,:acierto)";
+        $stmt=$pdo->prepare($sql_insert);
         $stmt->execute([
         ':codUsu' => $usuNuevo2,
-        ':acierto' => $contra2,
+        ':acierto' => $acierto
         ]);
     }
 }
@@ -35,7 +34,7 @@ while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
     <meta name="viewport" content="width=º, initial-scale=1.0">
     <title>acierto</title>
 </head>
-<body>
+<body style="background-color:<?=$_COOKIE['col'] ?? "#808080"; ?>;">
     <h1>SIMON</h1>
     <h3>Enhorabuena Paco, has acertado 🎉✨✨</h3>
     <table>
@@ -55,7 +54,7 @@ while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
     </table>
     <br></br>
         <p>Se ha guardado en la base de datos (acierto=1)</p>
-          <form action="interfaz.php" method="POST">
+          <form action="interfaz.php" method="GET">
             <button type="submit">Volver a jugar</button>
          </form>
          <form action="estadistica.php" method="POST">

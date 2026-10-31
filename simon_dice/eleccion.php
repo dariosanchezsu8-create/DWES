@@ -1,5 +1,6 @@
 <?php
 session_start();
+                echo $_SESSION['psswrd'];
 
 //Recuperar variables de sesión de forma segura con valores por defecto
 $n1 = $_SESSION['n_uno'] ?? 0;

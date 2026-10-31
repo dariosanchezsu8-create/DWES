@@ -21,7 +21,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
     if($fila['Nombre']==$usuario && $fila['Clave']==$clave) {
         if($fila['Rol']==0){
-            $_SESSION['rol']=$rol;
+            $_SESSION['rol']=$fila['rol'];
            $_SESSION['tener']=true;
             header('Location: interfaz.php'); // Redirige a la página de interfaz
             exit();

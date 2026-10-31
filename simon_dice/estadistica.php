@@ -1,12 +1,13 @@
 <?php
 session_start();
-
-// function sumatorioAciertos($aciertos,$codUsu){
-
-// }
-
+require_once 'conexion.php';
+$usuario=[];
+if($_SERVER['REQUEST_METHOD']){
+$sql ="SELECT j.codigousu,u.Nombre AS Nombre, SUM(j.acierto) AS total_aciertos FROM jugadas j JOIN usuarios u ON j.codigousu = u.Codigo GROUP BY codigousu";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+}
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,19 +27,27 @@ session_start();
                         <td style="border:1px solid black;">Aciertos</td>
                         <td style="border:1px solid black;">Gráfica</td>
                     </tr>
+                    <?php
+                    while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        ?>
                     <tr>
+                            <td style="border:1px solid black;"><?= $fila['codigousu']; ?></td>
+                            <td style="border:1px solid black;"><?= @$fila['Nombre']; ?></td>
+                            <td style="border:1px solid black;"><?= $fila['total_aciertos']; ?></td>
+                            <td style="border:1px solid black;">
+                                <svg width=" 20" height="20">
+                                     <rect width="<?= $fila['total_aciertos']; ?>" height="14" y="3" fill="#0085c7" rx="2" />
+                                </svg>
+                            </td>
 
                     </tr>
-                    <tr>
-
-                    </tr>
-                    <tr>
-
-                    </tr>
-            </table>
+                    <?php
+                    }
+                    ?>
+                </table>
     </form>
     <form action="interfaz.php" method="POST">
-        <button type="submit">Volver a jugar</button>
+        <button type="subt">Volver a jugar</button>
     </form>
     <form action="acceso.php" method="POST">
         <button type="submit">Cerrar sesión</button>
