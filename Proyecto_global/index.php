@@ -5,12 +5,12 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
     if(isset($_POST['nombre']) && isset($_POST['pwd'])){
         $_SESSION['nombre']=$_POST['nombre'];
         $_SESSION['pwd']=$_POST['pwd'];
-
         $sql ="SELECT nombre , clave, rol FROM usuarios";
         $stmt=$pdo->prepare($sql);
         $stmt->execute();
         while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        if($fila['nombre']==$_SESSION['nombre'] && $fila['clave']==$_SESSION['pwd']) {
+            $pwdBD=password_hash($fila['clave'],PASSWORD_DEFAULT);
+        if($fila['nombre']==$_SESSION['nombre'] && password_verify($_SESSION['pwd'], $pwdBD)) {
             if($fila['rol']==0){
                 header('Location: inicio.php'); 
                 exit();
@@ -18,11 +18,10 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
                 header("Location: admin.php");
                 exit();    
             }
-    } else {
-            echo "<p style='color:red;'>Usuario o clave incorrectos.</p>";
-        }
+            }
        }
-      }
+          echo "<p style='color:red;'>Usuario o clave incorrectos.</p>";
+       }
     }
 ?>
 <!DOCTYPE html>
@@ -40,12 +39,12 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
         <input type="text" name="nombre">
         <br></br>
         <label for="clave">CLAVE: </label>
-        <input type="password" name="pwd">
+        <input type="text" name="pwd">
         <br></br>
         <button type="submit" name="iniciar_sesion">Entrar</button>
-    </form>
-    <form action="registro.php" method="POST">
-        <button type="submit" name="registrar">Registrarse</button>
+        <form action="registro.php" method="POST">
+            <button type="submit" name="registrar">Registrarse</button>
+        </form>
     </form>
 </body>
 </html>
