@@ -11,13 +11,9 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
         while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $pwdBD=password_hash($fila['clave'],PASSWORD_DEFAULT);
         if($fila['nombre']==$_SESSION['nombre'] && password_verify($_SESSION['pwd'], $pwdBD)) {
-            if($fila['rol']==0){
-                header('Location: inicio.php'); 
-                exit();
-            }else{
-                header("Location: admin.php");
-                exit();    
-            }
+            $_SESSION['rol']=$fila['rol'];
+            header("Location: seguridad.php");
+            exit();
             }
        }
           echo "<p style='color:red;'>Usuario o clave incorrectos.</p>";
@@ -39,12 +35,12 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
         <input type="text" name="nombre">
         <br></br>
         <label for="clave">CLAVE: </label>
-        <input type="text" name="pwd">
+        <input type="password" name="pwd">
         <br></br>
         <button type="submit" name="iniciar_sesion">Entrar</button>
+    </form>
         <form action="registro.php" method="POST">
             <button type="submit" name="registrar">Registrarse</button>
         </form>
-    </form>
 </body>
 </html>

@@ -39,7 +39,7 @@ define("PRECIO_HORA",10);
 </head>
     <body>
         <h1>Modulos Formativos</h1>
-        <table border="1">
+        <table style="border:1px;">
             <?php
             //Existen variables locales y global. En php las globales
             //se defiene global +$variable
