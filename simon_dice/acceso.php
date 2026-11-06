@@ -8,7 +8,6 @@ session_destroy();
 // (Opcional) Si quieres volver a empezar una sesión limpia para el nuevo juego:
 session_start();
 require_once 'conexion.php';
-try{
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(isset($_POST['nombre'])&& isset($_POST['pwd'])){
     $usuario = $_POST['nombre'];
@@ -30,19 +29,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location: seguridad.php");
             exit();    
         }
-       
-   } else {
-         echo "<p style='color:red;'>Usuario o clave incorrectos.</p>";
-        }
-
+       }        
       }
-     }
+      echo "<p style='color:red;'>Usuario o clave incorrectos.</p>";
+    }
   }
-}catch(PDOException $e){
 
-        echo "<p style='color:red;'>Error </p>". $e->getMessage();
-
-        }
 /*
 Aqui en primer lugar el usuario metera los datos donde corresponda
 despues se comprobara con un select si existe el usuario en la base de datos
@@ -63,7 +55,7 @@ en el juego del simon dice
     <title>Document</title>
 </head>
 <body>
-    <h1>REGISTRO USUARIO</h1>
+    <h1>LOGIN USUARIO</h1>
     <form action="" method="POST">
         <label for="usuario">Usuario</label>
         <input type="text" name="nombre">

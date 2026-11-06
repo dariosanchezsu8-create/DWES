@@ -11,7 +11,6 @@ $sql ="SELECT codigousu FROM jugadas ORDER BY codjugada DESC LIMIT 1";
   $stmt=$pdo->prepare($sql);
   $stmt->execute();
   while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    echo $fila['codigousu'];      
   $sql_select="SELECT Nombre, Clave FROM usuarios WHERE Codigo LIKE '" . $fila['codigousu'] . "'";
         $stmt=$pdo->prepare($sql_select);
         $stmt->execute();

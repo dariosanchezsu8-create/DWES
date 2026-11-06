@@ -16,7 +16,7 @@ $stmt->execute();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estadística.php</title>
 </head>
-<body>
+<body style="background-color:<?=$_COOKIE['col'] ?? "#808080"; ?>;">
     <form action="" method="POST">
             <h2>SIMON - Estadísticas Globales</h2>
             <h3>paco, los resultados son:</h3>

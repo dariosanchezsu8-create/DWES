@@ -58,7 +58,7 @@ while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
     <title>Document</title>
 </head>
 <body>
-    <h1>REGISTRO</h1>
+    <h1>REGISTRO USUARIOS</h1>
     <form action="" method="POST">
         <label for="usuario">Usuario</label>
         <input type="text" name="usuario">

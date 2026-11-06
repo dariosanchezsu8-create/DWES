@@ -32,7 +32,6 @@ $stmt->execute();
 while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
     if($fila['Clave'] == $_SESSION['psswrd']){
         echo 'Usuario válido';
-        echo $fila['Codigo'];
         $usuNuevo3=$fila['Codigo'];
         $fallo=0;
         //3.Hacer el insert del acierto en la tabla de jugadas
