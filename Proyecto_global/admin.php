@@ -52,6 +52,20 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
         $errorLote=validarLote($campoLote);
         $errorEmojis=validarEmojis($campoEmojis);
         $errorContactos=validarContactos($campoContactos);
+/*
+Realizar un insert con los datos que se meten en los campos
+
+*/
+  $sql_insert ="INSERT INTO configuracion(id,max_lote,num_emojis,max_contactos)
+  VALUES (:id,:nlote,:nemo,:ncont)";
+        $stmt=$pdo->prepare($sql_insert);
+        $stmt->execute([
+        'id'=>$contador++,
+        'nlote'=>$campoLote,
+        'nemo'=>$campoEmojis,
+        'ncont'=>$campoContactos
+        ]);
+        header("Location: index.php");
 }
 ?>
 <!DOCTYPE html>

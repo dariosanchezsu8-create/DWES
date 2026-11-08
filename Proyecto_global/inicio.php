@@ -1,22 +1,19 @@
 <?php
 session_start();
-$emojis[
-"https://img.magnific.com/vector-gratis/ilustracion-emojis-escuchar-musica_23-2151298389.jpg?semt=ais_hybrid&w=100&q=80",
-"https://img.magnific.com/psd-gratis/emoji-llorando-3d_84443-82658.jpg?semt=ais_hybrid&w=100&q=80",
-"https://img.magnific.com/vector-gratis/ilustracion-emojis-aburridos-gradiente_23-2150769977.jpg?semt=ais_hybrid&w=100&q=80",
-"https://img.magnific.com/vector-gratis/ilustracion-emoji-odio-gradiente_52683-148484.jpg?semt=ais_hybrid&w=100&q=80",
-"https://img.magnific.com/psd-gratis/emoji-amarillo-sospechoso-monocle-busca-respuestas-3d-fondo-transparente_363450-7339.jpg?semt=ais_hybrid&w=100&q=80"
-];
-        // if(!isset($_POST['incrementar'])){
-        //     $_SESSION['emojis']=[];
-        //     $_SESSION['pulsaciones']=1;
-        // }else{
-        //     if($_SESSION['pulsaciones']<=4){   
-        //     $_SESSION['emojis'][$_SESSION['pulsaciones']]=$imagenes[$_SESSION['pulsaciones']];
-        //     $_SESSION['pulsaciones']++;
+require_once 'conexion.php';
+require_once 'funciones.php';
+/*
+2. Hacer que siempre haya un emoji e implementarlo luego en la logica
+3. Hacer logica de al dar al boton incrementar 
+*/
+if($_SERVER['REQUEST_METHOD']==="POST"){
+    $pulsaciones=1;    
+    $sql ="SELECT max_Lote,num_emojis,max_contactos FROM configuracion";
+        $stmt=$pdo->prepare($sql);
+        $stmt->execute();
 
-        //     }
-        //   }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,6 +26,27 @@ $emojis[
     <h1>AGENDAS DE CONTACTOS</h1>
     <p>Usuario: <?=$_SESSION['nombre']; ?> · Contactos a grabar: <?= "numero";?></p>
     <form action="" method="`POST">
+        <tabla>
+            <tr>
+                <td><?= $emojis[0]; ?></td>
+                <?php
+                    while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        if(isset($fila['max_lote'])&& isset($fila['num_emojis'])&& isset($fila['max_contactos'])){
+                            if(!$pulsaciones<$fila['maxLote']){
+                                $emojis[$pulsaciones];
+                                $pulsaciones++;
+                            }
+                        }
+
+                    ?>
+                <td><td>
+                    <?php
+                        }
+                    ?>
+            </tr>
+
+        </table>
+
        <button type="submit">INCREMENTAR</button> 
     </form>
     <form action="grabado.php" method="POST">
