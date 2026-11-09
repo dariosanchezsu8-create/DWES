@@ -9,7 +9,7 @@
     <form action="upload.php" method="POST" enctype="multipart/form-data">
         <label for="usuario">Selecciona un fichero: </label>
         <br></br>
-        <input type="file" name="fileToUpload" id="fileToUpload">
+        <input type="file" name="fileToUpload"  id="fileToUpload">
         <br></br>
         <input type="submit" name="submit" value="Upload Image">
         <br></br>
