@@ -1,23 +1,19 @@
 <?php
 session_start();
+require_once'conexion.php';
 //Al enviar los datos por el header location estos no se envian
 //por el metodo post si no con el metodo GET
 //Para hacer los circulos haq que hacer una tabla
 // y poner la etiqueta circle 
 $n1=0;
 $n2=0;
-if($_SERVER["REQUEST_METHOD"]==="GET"){
-    if(isset($_SESSION['clr']) && isset($_SESSION['crcl'])){
-        $n1=$_SESSION['crcl'];
-        $n2=$_SESSION['clr'];
-    }
-}else{
-    $_SESSION['circulos']= $_POST['circulos'] ?? 0;
-    $_SESSION['colores']= $_POST['colores'] ?? 0;
-
-    $n1 = $_SESSION['circulos'];
-    $n2 = $_SESSION['colores'];
-    }
+$sql ="SELECT num_circulos, num_colores FROM configuracion";
+  $stmt=$pdo->prepare($sql);
+  $stmt->execute();
+while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $n1=$fila['num_circulos'];
+    $n2=$fila['num_colores'];
+}
  //validacion de datos entre 4-8
  if($n1<4 || $n1>8){
     echo "El numero de circulos tiene que estar entre 4 y 8"."<br>";
@@ -29,6 +25,7 @@ if($_SERVER["REQUEST_METHOD"]==="GET"){
     echo "<a href='interfaz.php'>Volver al formulario</a>";
     exit();
     }
+    echo $n1 ." ".$n1;
     $_SESSION['n_uno']=$n1;
     $_SESSION['n_dos']=$n2;
     $tmpExpiracion=time()+(86400*30);

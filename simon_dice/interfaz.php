@@ -3,7 +3,7 @@ require_once 'conexion.php';
 // 1. Abrimos la puerta de la sesión que trae el navegador
 session_start();
 
-if (isset($_SERVER['HTTP_REFERER']) && (strpos($_SERVER['HTTP_REFERER'], 'fallo.php') !== false || strpos($_SERVER['HTTP_REFERER'], 'acierto.php') !== false)) {
+if ($_SERVER['REQUEST_METHOD']==="POST"){
   session_unset();
   session_destroy();
   session_start();
@@ -33,7 +33,7 @@ $sql ="SELECT codigousu FROM jugadas ORDER BY codjugada DESC LIMIT 1";
         <h1>Bienvenida, al simon dice</h1>
         <form action="pintar_circulos.php" method="POST">
             <label for="circulos">Numero de círculos</label>
-            <input type="text" name="circulos" value=7></input>     
+            <input type="text" name="circulos"></input>     
             <br></br>            
             <label for="colores">Numero de colores</label>
             <input type="text" name="colores"></input>

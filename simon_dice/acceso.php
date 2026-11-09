@@ -22,7 +22,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         if($fila['Rol']==0){
             $_SESSION['rol']=$fila['rol'];
            $_SESSION['tener']=true;
-            header('Location: interfaz.php'); // Redirige a la página de interfaz
+            header('Location: pintar_circulos.php'); // Redirige a la página de interfaz
             exit();
         }else{
            $_SESSION['tener']=false;

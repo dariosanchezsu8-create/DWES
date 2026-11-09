@@ -10,12 +10,12 @@ require_once 'conexion.php';
                 $crcl=$_SESSION['crcl'];
                 $clr=$_SESSION['clr'];
                 //$_SESSION['']
-                $sql ="INSERT INTO configuracion (num_circulos,num_colores)  VALUES (:numCi,:numC)";
+                $sql ="UPDATE configuracion SET num_colores= :circulos, num_colores=.colores";
                 $stmt=$pdo->prepare($sql);
-                $stmt->execute([
-                ':numCi' => $crcl,
-                ':numC' => $clr
-                ]);
+                $stmt->execute(
+                    ':circulos'=>$_POST['circulos'],
+                    ':colores'=>$_POST['colores']
+                );
                 header('Location: pintar_circulos.php');
             }else{
                 header('Location: acceso.php');
@@ -37,7 +37,7 @@ require_once 'conexion.php';
     <h1>PANEL DEL CONTROL</h1>
          <form action="" method="POST">
             <label for="circulos">Numero de círculos</label>
-            <input type="text" name="circulos" value=7></input>     
+            <input type="text" name="circulos"></input>     
             <br></br>            
             <label for="colores">Numero de colores</label>
             <input type="text" name="colores"></input>

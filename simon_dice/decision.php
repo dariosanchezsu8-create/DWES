@@ -1,11 +1,11 @@
 <?php
 session_start();
 $n1=$_SESSION['n_uno'] ?? 0;
+echo $n1;
 $inicial=$_SESSION['combi_inicial'] ?? [];
 $final=$_SESSION['combi_Final'] ?? [];
 if($_SERVER['REQUEST_METHOD']==="POST"){
     if(isset($_SESSION['combi_inicial']) && isset($_SESSION['combi_Final'])){
-$n1=$_SESSION['circulos']?? 0;
 $inicial=$_SESSION['combi_inicial'];
 $final=$_SESSION['combi_Final'];
 $contador=0; 
@@ -30,8 +30,10 @@ for($i=0;$i<$n1;$i++){
     <?php
      if($_SESSION['contador']==$n1){    
             header("Location: acierto.php");
+            exit();
      }else{    
-            header("Location: fallo.php");    
+            header("Location: fallo.php");
+            exit();    
     }
     ?>
 

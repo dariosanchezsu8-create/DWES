@@ -54,7 +54,7 @@ while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
     </table>
     <br></br>
         <p>Se ha guardado en la base de datos (acierto=1)</p>
-          <form action="interfaz.php" method="GET">
+          <form action="pintar_circulos.php" method="POST">
             <button type="submit">Volver a jugar</button>
          </form>
          <form action="estadistica.php" method="POST">

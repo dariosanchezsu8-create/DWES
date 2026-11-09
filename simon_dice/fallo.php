@@ -26,7 +26,7 @@ $final=$_SESSION['combi_Final'] ?? [];
 
 if($_SERVER['REQUEST_METHOD']==="GET"){
 //2.Comprobar que el usuario existe con la select
-$sql = "SELECT Codigo, Nombre, Clave FROM usuarios ";
+$sql = "SELECT Codigo, Nombre, Clave FROM usuarios";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -96,7 +96,7 @@ while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
     <br></br>
     <p>Se ha guardado en la base de datos (acierto=0)</p>
     <br></br>
-          <form action="interfaz.php" method="GET">
+          <form action="pintar_circulos.php" method="POST">
             <button type="submit">Volver a jugar</button>
          </form>
          <form action="estadistica.php" method="POST">
