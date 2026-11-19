@@ -11,7 +11,6 @@ define("emojis",[
 "🖋️",
 "⌚"
 ]); 
-$num=5;
 function emojisDisponibles(int $num):array{
     $emojPartido=[];
     for($i=0;$i<$num;$i++){
@@ -20,12 +19,13 @@ function emojisDisponibles(int $num):array{
     return $emojPartido;
 
 }
-function emojiAleatorio(array $emojis){
+function emojiAleatorio(array $emojis):array{
     $cAleatorio=[];
     for($i=0;$i<count($c);$i++){
     $aleatorio=rand(0,count($c)-1);
     $cAleatorio[]=$c[$aleatorio];
     }
+    return $cAleatorio;
 }
 
 function validarContacto(array $c):array{

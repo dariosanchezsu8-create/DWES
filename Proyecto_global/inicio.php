@@ -14,6 +14,7 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
 
 }
 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,14 +33,17 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
                 <?php
                     while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         if(isset($fila['max_lote'])&& isset($fila['num_emojis'])&& isset($fila['max_contactos'])){
-                            if(!$pulsaciones<$fila['maxLote']){
-                                $emojis[$pulsaciones];
-                                $pulsaciones++;
+                            //Validar que este bien  
+                            $emojis=emojiAleatorio(emojisDisponibles($fila['max_lote']));  
+                            
+                                  if(!$pulsaciones<$fila['maxLote']){
+                                        $emojis[$pulsaciones];
+                                        $pulsaciones++;
                             }
                         }
 
                     ?>
-                <td><td>
+                 <td><td>
                     <?php
                         }
                     ?>
