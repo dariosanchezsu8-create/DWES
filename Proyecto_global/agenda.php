@@ -1,3 +1,8 @@
+<?php
+session_start();
+echo $_SESSION['pulsa'];
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

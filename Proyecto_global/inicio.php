@@ -2,19 +2,36 @@
 session_start();
 require_once 'conexion.php';
 require_once 'funciones.php';
-/*
-2. Hacer que siempre haya un emoji e implementarlo luego en la logica
-3. Hacer logica de al dar al boton incrementar 
-*/
-if($_SERVER['REQUEST_METHOD']==="POST"){
-    $pulsaciones=1;    
-    $sql ="SELECT max_Lote,num_emojis,max_contactos FROM configuracion";
+
+$pulsaciones = $_SESSION['pulsa'] ?? 0;
+$listaDef=[];
+$valores=$_SESSION['valores']??'';
+    $sql ="SELECT max_lote,num_emojis,max_contactos FROM configuracion ORDER BY id DESC  LIMIT 1";
         $stmt=$pdo->prepare($sql);
         $stmt->execute();
-
-}
-
-
+         while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            if (empty($_SESSION['listaDef'])) {
+        $_SESSION['listaDef'] = emojiAleatorio(emojisDisponibles((int)$fila['max_lote']));
+            }
+        $listaDef = $_SESSION['listaDef'];
+        if($_SERVER['REQUEST_METHOD']==="POST"){
+            if($pulsaciones<$fila['max_lote']){
+               $listaDef[$pulsaciones];
+                $pulsaciones++;
+            }
+            $_SESSION['pulsa']=$pulsaciones;         
+         }else{
+            $listaDef[$pulsaciones];
+            $pulsaciones++;
+            $_SESSION['pulsa']=$pulsaciones;
+         }
+         $valores.=$listaDef[$pulsaciones];
+         $_SESSION['valores']=$valores;
+         echo $pulsaciones;
+         if($pulsaciones===count($listaDef)){
+            header("Location: agenda.php");
+            exit();
+         }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,32 +42,13 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
 </head>
 <body>
     <h1>AGENDAS DE CONTACTOS</h1>
-    <p>Usuario: <?=$_SESSION['nombre']; ?> · Contactos a grabar: <?= "numero";?></p>
-    <form action="" method="`POST">
-        <tabla>
+    <p>Usuario: <?=$_SESSION['nombre']; ?> · Contactos a grabar: <?= $fila['max_lote'];?></p>
+    <form action="" method="POST">
+        <table>
             <tr>
-                <td><?= $emojis[0]; ?></td>
-                <?php
-                    while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                        if(isset($fila['max_lote'])&& isset($fila['num_emojis'])&& isset($fila['max_contactos'])){
-                            //Validar que este bien  
-                            $emojis=emojiAleatorio(emojisDisponibles($fila['max_lote']));  
-                            
-                                  if(!$pulsaciones<$fila['maxLote']){
-                                        $emojis[$pulsaciones];
-                                        $pulsaciones++;
-                            }
-                        }
-
-                    ?>
-                 <td><td>
-                    <?php
-                        }
-                    ?>
+                <td><?=$valores;?></td>
             </tr>
-
         </table>
-
        <button type="submit">INCREMENTAR</button> 
     </form>
     <form action="grabado.php" method="POST">
@@ -58,3 +56,6 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
     </form>
 </body>
 </html>
+<?php
+         }
+         ?>

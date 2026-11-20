@@ -1,5 +1,9 @@
 
 <?php
+session_start();
+session_unset(); 
+session_destroy(); 
+
 require_once 'conexion.php';
 session_start();
 if($_SERVER['REQUEST_METHOD']==="POST"){
