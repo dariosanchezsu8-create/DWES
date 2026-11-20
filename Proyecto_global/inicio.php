@@ -51,7 +51,7 @@ $valores=$_SESSION['valores']??'';
         </table>
        <button type="submit">INCREMENTAR</button> 
     </form>
-    <form action="grabado.php" method="POST">
+    <form action="agenda.php" method="POST">
            <button type="submit">GRABAR</button> 
     </form>
 </body>

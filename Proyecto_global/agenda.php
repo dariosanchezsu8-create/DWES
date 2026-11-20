@@ -1,7 +1,17 @@
 <?php
 session_start();
-echo $_SESSION['pulsa'];
-
+require_once 'funciones.php';
+$listaDef=$_SESSION['listaDef'];
+$contactos=[];
+$errores=[];
+if($_SERVER['REQUEST_METHOD']==='POST'){
+    if(isset($_POST['contactos'])){
+        $contactos=$_POST['contactos']??[];
+        for ($i = 0; $i < $_SESSION['pulsa']; $i++){
+        $errores[$i]=validarContacto($contactos[$i])??[];
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,32 +21,18 @@ echo $_SESSION['pulsa'];
     <title>Document</title>
 </head>
 <body>
+    <p style="font-weight:bold;font-size:20px;">Usuario: <?= $_SESSION['nombre'] ?></p>
+    <form action="" method="POST"> 
+     <?php              
+            for($i=0;$i<$_SESSION['pulsa'];$i++){
 
-        <p style="font-weight:bold;font-size:20px;">Usuario: <?= $_SESSION['nombre'] ?></p>
-<!--No se envian los datos porq en el form no tenia nada puesto-->
-        <form action="Grabado.php" method="POST">
-            <table style="border: 2px solid #000000;">
-                <tr>
-                    <?php
-                   // for($i=0;$i<$_SESSION['pulsaciones'];$i++){
-                    ?>
-                    <td style="border: 2px solid #000000;">
-                        <h3>CONTACTO <?= $i+1; ?></h3>
-                        Nombre: <input type="text" name="nombre<?= $i+1;?>">
-                        Apellidos: <input type="text" name="apellidos<?= $i+1;?>"><br>
-                        Email: <input type="email" name="email<?= $i+1;?>">
-                        Teléfono: <input type="tel" name="telefono<?= $i+1;?>">
-                    </td>
-                    <?php
-                    //}
-                    ?>
-                </tr>
-            </table>
+        ?>
+    <div><?= pintarFormularioContacto($i,$listaDef[$i],$contactos[$i]=[],$errores[$i]=[]); ?></div>
+        <?php
+            }     
+        ?>
         <br></br>
-<!--Si pones el boton en otro formulario distinto de los inputs
-al darle al boton si pasara de pantalla pero los inputs no
-al esta en otro formulario independiente-->
-    <button type="submit" name="gr">Grabar</button>
-</form>
+    <button type="submit" name="gr">Grabar Contactos</button>
+    </form>
 </body>
 </html>

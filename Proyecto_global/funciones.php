@@ -108,7 +108,6 @@ return $errores;
 }
     function pintarFormularioContacto(int $i, string $emojis,array $valores,array $errores):string{
         $num = $i + 1;
-
         //Ejemplo =0'Conner Sin ENT_QUOTES partiria a la mitad el valor
         //Esto es opocional pero maas claridad evitar error de undefined array key
         $nombre   = htmlspecialchars($valores['nombre'] ?? '', ENT_QUOTES, 'UTF-8');
