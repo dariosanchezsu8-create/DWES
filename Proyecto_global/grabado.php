@@ -3,29 +3,41 @@ session_start();
 require_once'conexion.php';
 //Hacer primero consulta codigo usu
 //luego hacer consulta trasaciion
-y lueogo consulta de recuento segun el id
+echo $_SESSION['nombre'];
+$total=0;
+$emoji="";
 if(!empty($_SESSION['contactos_lote'])){
+     $sql ="SELECT codigo FROM usuarios WHERE nombre=:nombre ";
+        $stmt=$pdo->prepare($sql);
+        $stmt->execute([
+            ':nombre'=>$_SESSION['nombre']
+        ]);
+        $codigo=$stmt->fetchColumn();
+
     $contactos=$_SESSION['contactos_lote'];
     $pdo->beginTransaction();
     $stmt = $pdo->prepare(
             "INSERT INTO contactos (codigousu, nombre, apellidos, telefono, email, emoji, fecha)
-             VALUES (:cod, :nom, :ape, :tlf, :email, :emoji)"
-        );
+             VALUES (:cod, :nom, :ape, :tlf, :email, :emoji,NOW())");
         foreach($contactos as $i =>$j){
+            $emoji=$_SESSION['listaDef'][$i];
              $stmt->execute([
-                ':cod'   => $_SESSION['codigo'],
-                ':nom'   => $c['nombre'],
-                ':ape'   => $c['apellido'])
-                
+                ':cod'   =>  $codigo,
+                ':nom'   => $j['nombre'],
+                ':ape'   => $j['apellido'],
+                ':tlf'   => $j['tlf'],
+                ':email' => $j['email'],
+                ':emoji' => $emoji
              ]);
         }
         $pdo->commit();
-
-
-
-
-
-
+        $sql_select="SELECT COUNT(*) AS total_agenda FROM contactos WHERE codigousu = :cod";
+        $stmt = $pdo->prepare($sql_select);
+        $stmt->execute([
+         ':cod' => $codigo
+        ]);    
+        $total=$stmt->fetchColumn();
+        //Para que al recargar la web no repita nada
 }
 ?>
 <!DOCTYPE html>
@@ -38,10 +50,10 @@ if(!empty($_SESSION['contactos_lote'])){
 <body>
     <h1>AGENDAS CONTACTOS</h1>
     <p>Usuario: <?= $_SESSION['nombre']; ?></p>
-    <p>Se han grabado <?= $_SESSION['pulsa']; ?> en tu agenda <?= $_SESSION['listaDef']; ?></p>
-    <p>Tu agenda tiene ahora  contactos</p>
-
-    <a href="inicio.php">Grabar mása contactos</a>
+    <p>Se han grabado <?= $_SESSION['pulsa']; ?> en tu agenda <?= $emoji; ?></p>
+    <p>Tu agenda tiene ahora <?= $total; ?> contactos</p>
+    
+    <a href="inicio.php">Grabar más contactos</a>
     <a href="totales.php">Ver Totales</a>
     <a href="index.php">Cerrar Sesión</a>
 </body>
