@@ -37,7 +37,11 @@ if(!empty($_SESSION['contactos_lote'])){
          ':cod' => $codigo
         ]);    
         $total=$stmt->fetchColumn();
-        //Para que al recargar la web no repita nada
+
+          if ($pdo->inTransaction()) {
+            $pdo->rollBack();
+          }
+
 }
 ?>
 <!DOCTYPE html>
