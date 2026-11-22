@@ -1,11 +1,7 @@
 
 <?php
 session_start();
-session_unset(); 
-session_destroy(); 
-
 require_once 'conexion.php';
-session_start();
 if($_SERVER['REQUEST_METHOD']==="POST"){
     if(isset($_POST['nombre']) && isset($_POST['pwd'])){
         $_SESSION['nombre']=$_POST['nombre'];
@@ -16,6 +12,7 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
         while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $pwdBD=password_hash($fila['clave'],PASSWORD_DEFAULT);
         if($fila['nombre']==$_SESSION['nombre'] && password_verify($_SESSION['pwd'], $pwdBD)) {
+            session_regenerate_id(true);
             $_SESSION['rol']=$fila['rol'];
             header("Location: seguridad.php");
             exit();

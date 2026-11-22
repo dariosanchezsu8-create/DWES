@@ -2,14 +2,15 @@
 session_start();
 require_once'conexion.php';
 $sumatorio=0;
+
     $sql = "SELECT u.codigo, COUNT(c.codigousu)AS total_contactos, u.nombre,MAX(c.fecha)AS ultima
     FROM usuarios u
     LEFT JOIN contactos c ON c.codigousu = u.codigo
-    GROUP BY c.codigousu
-    ORDER BY total_contactos DESC, u.nombre ASC";
+    GROUP BY u.codigo
+    ORDER BY u.codigo DESC, u.nombre ASC";
     $stmt=$pdo->prepare($sql);
     $stmt->execute();
-    $filas= $pdo->query($sql)->fetchAll();
+    $filas=$stmt->fetchAll();
     foreach($filas as $datos){
         $sumatorio+=$datos['total_contactos'];
     }
@@ -39,12 +40,13 @@ $sumatorio=0;
                 if($datos['nombre']=="admin"){
                     continue;
                 }
+                $porcentaje=round($porcentaje, 2);
         ?>
         <tr>
             <td style="border:3px solid black;"><?= $datos['codigo']??"----" ;?></td>
             <td style="border:3px solid black;"><?= $datos['nombre'] ??"----";?></td>
             <td style="border:3px solid black;"><?= $datos['total_contactos'] ??"----";?></td>
-            <td style="border:3px solid black;"><?= $porcentaje ?? "----";?></td>
+            <td style="border:3px solid black;"><?= $porcentaje*100 ?? "----";?></td>
             <td style="border:3px solid black;"><?= $datos['ultima'] ?? "----";?></td>
             <td style="border:3px solid black;">
             <svg width=" 20" height="20">
@@ -56,7 +58,7 @@ $sumatorio=0;
         ?>
         </tr>
     </table>
-<a href="agenda.php">Grabar más contactos</a>    <a href="index.php">Cerrar sesión</a>
+<a href="agenda.php">Grabar más contactos</a>    <a href="salir.php">Cerrar sesión</a>
 
 </body>
 </html>

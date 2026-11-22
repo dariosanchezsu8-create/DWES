@@ -18,7 +18,7 @@ if(!empty($_SESSION['contactos_lote'])){
     $pdo->beginTransaction();
     $stmt = $pdo->prepare(
             "INSERT INTO contactos (codigousu, nombre, apellidos, telefono, email, emoji, fecha)
-             VALUES (:cod, :nom, :ape, :tlf, :email, :emoji,NOW())");
+             VALUES (:cod, :nom, :ape, :tlf, :email, :emoji,CURDATE())");
         foreach($contactos as $i =>$j){
             $emoji=$_SESSION['listaDef'][$i];
              $stmt->execute([

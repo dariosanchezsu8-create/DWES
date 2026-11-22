@@ -1,5 +1,5 @@
 <?php
-require_once'conexion.php';
+require_once 'conexion.php';
 session_start();
 if($_SERVER['REQUEST_METHOD']==="POST"){
     if(isset($_POST['nomRegistro']) && isset($_POST['pwdRegistro'])){
