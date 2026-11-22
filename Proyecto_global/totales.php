@@ -25,6 +25,7 @@ $estilo="";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>totales.php</title>
+    <link rel="stylesheet" href="css.css">
 </head>
 <body>
     <h1>AGENDA - Totales</h1>
@@ -67,6 +68,6 @@ $estilo="";
             ?>
         </tr>
     </table>
-    <a href="agenda.php">Grabar más contactos</a>    <a href="salir.php">Cerrar sesión</a>
+    <a href="inicio.php">Grabar más contactos</a>    <a href="salir.php">Cerrar sesión</a>
 </body>
 </html>

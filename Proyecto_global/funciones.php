@@ -2,7 +2,7 @@
 //Modulo de lógica pura
 
 /**
- * @param array de strings que contiene los emojis del programa completo
+ * @param array EMOJIS de strings que contiene los emojis del programa completo
  */
 define("EMOJIS",[
 "😺",

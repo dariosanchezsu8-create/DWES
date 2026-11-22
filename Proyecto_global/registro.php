@@ -36,6 +36,7 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro.php</title>
+    <link rel="stylesheet" href="css.css">
 </head>
 <body>
 <h1>REGISTRO DE USUARIO</h1>

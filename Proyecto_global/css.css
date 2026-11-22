@@ -1,0 +1,71 @@
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    max-width: 700px;
+    margin: auto;
+    padding: 15px;
+    text-align: center;
+    color: #222;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+a {
+    color: #1a4fb4;
+    margin: 0 6px;
+}
+
+button {
+    padding: 6px 14px;
+    border: 1px solid #888;
+    border-radius: 4px;
+    background: #f2f2f2;
+    cursor: pointer;
+}
+
+input {
+    padding: 4px;
+    border: 1px solid #888;
+    border-radius: 3px;
+}
+
+fieldset {
+    margin: 10px auto;
+    padding: 10px;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    text-align: left;
+}
+fieldset table {
+    border: none;
+    margin: 0;
+}
+fieldset td {
+    border: none;
+    padding: 4px;
+}
+
+.error {
+    color: red;
+    font-size: 13px;
+    margin-right: 8px;
+}
+
+table {
+    margin: 15px auto;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid #333;
+    padding: 5px 10px;
+}
+th {
+    background: #eee;
+}
+fieldset th {
+    border: none;
+    background: none;
+}

@@ -19,11 +19,9 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
          if (!isset($a) || $a === "") { 
             $error = "El lote está vacío";  
         
-         }elseif (!is_numeric($a)) {
-                $error = "El lote no es un número";
-          }elseif(!is_int($a)){
-                 $error = "El número no es entero";
-           }elseif($a<$min && $a>$max){
+         }elseif (!ctype_digit($a)) {
+                $error = "El lote no es un número entero";
+           }elseif($a<$min || $a>$max){
               $error="Número tiene que estar dentro del rango";
             }
             return $error;
@@ -33,11 +31,9 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
           $error="";
           if (!isset($b) || $b === "") {
             $error = "El lote está vacío";
-          }elseif (!is_numeric($b)) {
-                $error = "El lote no es un número";
-          }elseif(!is_int($b)){
-                 $error = "El número no es entero";
-          }elseif($b<$min && $b>$max){
+          }elseif (!ctype_digit($b)) {
+                $error = "El valor no es un número entero";
+          }elseif($b<$min || $b>$max){
                 $error="Número tiene que estar dentro del rango";
             }   
             return $error;
@@ -47,11 +43,9 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
           $error="";
           if (!isset($c) || $c === "") {
             $error = "El lote está vacío";
-            }elseif (!is_numeric($c)) {
+            }elseif (!ctype_digit($c)) {
                 $error = "El lote no es un número";
-          }elseif(!is_int($c)){
-                 $error = "El número no es entero";
-          }elseif($c<$min && $c>$max){
+          }elseif($c<$min || $c>$max){
                $error="Número tiene que estar dentro del rango";
              }
             return $error;
@@ -60,7 +54,7 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
         $errorLote=validarLote($campoLote,3,8);
         $errorEmojis=validarEmojis($campoEmojis,4,10);
         $errorContactos=validarContactos($campoContactos,10,100);
-
+    if($errorLote==="" && $errorEmojis==="" && $errorContactos===""){
     $sql_insert ="INSERT INTO configuracion(id,max_lote,num_emojis,max_contactos)
     VALUES (:id,:nlote,:nemo,:ncont)";
             $stmt=$pdo->prepare($sql_insert);
@@ -71,7 +65,8 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
             'ncont'=>$campoContactos
             ]);
             header("Location: index.php");
-}else{
+    }
+}
     $sql_select="SELECT max_lote,num_emojis,max_contactos FROM configuracion ORDER BY id DESC LIMIT 1";
     $stmt=$pdo->prepare($sql_select);
     $stmt->execute();
@@ -79,8 +74,12 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
         $max_lote=$fila['max_lote'];
         $num_emoji=$fila['num_emojis'];
         $max_contactos=$fila['max_contactos'];
+        
     }
-}
+    $_SESSION['maxL']=$max_lote;
+    $_SESSION['numE']=$num_emoji;
+    $_SESSION['maxC']=$max_contactos;
+       
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -88,6 +87,7 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>admin.php</title>
+    <link rel="stylesheet" href="css.css">
 </head>
 <body>
     <h1>Panel de Administración</h1>
