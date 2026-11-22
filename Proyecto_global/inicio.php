@@ -27,7 +27,6 @@ $valores=$_SESSION['valores']??'';
          }
          $valores.=$listaDef[$pulsaciones];
          $_SESSION['valores']=$valores;
-         echo $pulsaciones;
          if($pulsaciones===count($listaDef)){
             header("Location: agenda.php");
             exit();
@@ -42,7 +41,7 @@ $valores=$_SESSION['valores']??'';
 </head>
 <body>
     <h1>AGENDAS DE CONTACTOS</h1>
-    <p>Usuario: <?=$_SESSION['nombre']; ?> · Contactos a grabar: <?= $fila['max_lote'];?></p>
+    <p>Usuario: <?=$_SESSION['nombre']; ?> · Contactos a grabar: <?= $_SESSION['pulsa'];?></p>
     <form action="" method="POST">
         <table>
             <tr>

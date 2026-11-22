@@ -19,6 +19,7 @@ function emojisDisponibles(int $num):array{
     return $emojPartido;
 
 }
+
 function emojiAleatorio(array $emojPartido):array{
     $aleatorio=[];
     for($i=0;$i<count($emojPartido);$i++){
@@ -27,6 +28,8 @@ function emojiAleatorio(array $emojPartido):array{
     }
     return $aleatorio;
 }
+
+
 
 function validarContacto(array $c):array{
 $errores=[];
@@ -64,7 +67,10 @@ $email = trim((string)($c['email'] ?? ''));
 }
 return $errores;
 }
-    function pintarFormularioContacto(int $i, string $emojis,array $valores,array $errores):string{
+
+
+
+function pintarFormularioContacto(int $i, string $emojis,array $valores,array $errores):string{
         //Ejemplo =0'Conner Sin ENT_QUOTES partiria a la mitad el valor
         //Esto es opocional pero maas claridad evitar error de undefined array key
         $nombre   = htmlspecialchars($valores['nombre'] ?? '', ENT_QUOTES, 'UTF-8');

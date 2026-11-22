@@ -6,7 +6,7 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
     if(isset($_POST['nombre']) && isset($_POST['pwd'])){
         $_SESSION['nombre']=$_POST['nombre'];
         $_SESSION['pwd']=$_POST['pwd'];
-        $sql ="SELECT nombre , clave, rol FROM usuarios";
+        $sql ="SELECT codigo, nombre , clave, rol FROM usuarios";
         $stmt=$pdo->prepare($sql);
         $stmt->execute();
         while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -14,6 +14,7 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
         if($fila['nombre']==$_SESSION['nombre'] && password_verify($_SESSION['pwd'], $pwdBD)) {
             session_regenerate_id(true);
             $_SESSION['rol']=$fila['rol'];
+            $_SESSION['cod']=$fila['codigo'];
             header("Location: seguridad.php");
             exit();
             }
