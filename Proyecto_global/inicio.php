@@ -23,9 +23,13 @@ $valores=$_SESSION['valores']??'';
             }
             $_SESSION['pulsa']=$pulsaciones;         
          }else{
+            if($_SERVER['HTTP_REFERER']==="http://localhost/agenda/grabado.php"){
+                $_SESSION['pulsa'];
+            }else{
             $listaDef[$pulsaciones];
             $pulsaciones++;
             $_SESSION['pulsa']=$pulsaciones;
+            }
          }
          $valores.=$listaDef[$pulsaciones];
          $_SESSION['valores']=$valores;
@@ -43,7 +47,7 @@ $valores=$_SESSION['valores']??'';
 </head>
 <body>
     <h1>AGENDAS DE CONTACTOS</h1>
-    <p>Usuario: <?=htmlspecialchars($_SESSION['nombre']); ?> · Contactos a grabar: <?= htmlspecialchars($_SESSION['pulsa']);?></p>
+    <p>Usuario: <b><?=htmlspecialchars($_SESSION['nombre']); ?></b> · Contactos a grabar: <?= htmlspecialchars($_SESSION['pulsa']);?></p>
     <form action="" method="POST">
         <table>
             <tr>

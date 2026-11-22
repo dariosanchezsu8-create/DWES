@@ -4,9 +4,9 @@ require_once 'conexion.php';
 
 $total=0;
 $emoji="";
-
+$pulsaciones=$_SESSION['pulsa'];
 if(!empty($_SESSION['contactos_lote'])){
-
+    try{
      $sql ="SELECT codigo FROM usuarios WHERE nombre=:nombre ";
         $stmt=$pdo->prepare($sql);
         $stmt->execute([
@@ -40,11 +40,13 @@ if(!empty($_SESSION['contactos_lote'])){
         ]);    
         
         $total=$stmt->fetchColumn();
-
-          if ($pdo->inTransaction()) {
+        unset($_SESSION['pulsa'], $_SESSION['valores'], $_SESSION['listaDef'], $_SESSION['contactos_lote']);
+        
+        }catch(PDOException $e){
+            if ($pdo->inTransaction()) {
             $pdo->rollBack();
           }
-
+        }
 }
 ?>
 <!DOCTYPE html>
@@ -56,8 +58,8 @@ if(!empty($_SESSION['contactos_lote'])){
 </head>
 <body>
     <h1>AGENDAS CONTACTOS</h1>
-    <p>Usuario: <?= htmlspecialchars($_SESSION['nombre']); ?></p>
-    <p>Se han grabado <?= htmlspecialchars($_SESSION['pulsa']); ?> en tu agenda <?= $emoji; ?></p>
+    <p>Usuario: <b><?= htmlspecialchars($_SESSION['nombre']); ?></b></p>
+    <p>Se han grabado <?= htmlspecialchars($pulsaciones); ?> en tu agenda <?= $emoji; ?></p>
     <p>Tu agenda tiene ahora <?= $total; ?> contactos</p>
     
     <a href="inicio.php">Grabar más contactos</a>
