@@ -1,13 +1,14 @@
 <?php
 require_once 'conexion.php';
 session_start();
+
 if($_SERVER['REQUEST_METHOD']==="POST"){
     if(isset($_POST['nomRegistro']) && isset($_POST['pwdRegistro'])){
         $nombre=$_POST['nomRegistro'];
         $pwd=$_POST['pwdRegistro'];
+        $rol=0;
 
-
- $sql ="SELECT nombre , clave, rol FROM usuarios";
+        $sql ="SELECT nombre , clave, rol FROM usuarios";
         $stmt=$pdo->prepare($sql);
         $stmt->execute();
         while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -20,7 +21,7 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
                 $stmt->execute([       
                 ':nom' => $nombre,
                 ':contra' => $pwd,
-                ':rol'=>0
+                ':rol'=>$rol
                 ]);
                 header("Location: index.php");
                 exit();

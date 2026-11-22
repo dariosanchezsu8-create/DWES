@@ -1,12 +1,12 @@
 <?php
 session_start();
-require_once'conexion.php';
-//Hacer primero consulta codigo usu
-//luego hacer consulta trasaciion
-echo $_SESSION['nombre'];
+require_once 'conexion.php';
+
 $total=0;
 $emoji="";
+
 if(!empty($_SESSION['contactos_lote'])){
+
      $sql ="SELECT codigo FROM usuarios WHERE nombre=:nombre ";
         $stmt=$pdo->prepare($sql);
         $stmt->execute([
@@ -14,11 +14,12 @@ if(!empty($_SESSION['contactos_lote'])){
         ]);
         $codigo=$stmt->fetchColumn();
 
-    $contactos=$_SESSION['contactos_lote'];
-    $pdo->beginTransaction();
-    $stmt = $pdo->prepare(
+        $contactos=$_SESSION['contactos_lote'];
+        $pdo->beginTransaction();
+        $stmt = $pdo->prepare(
             "INSERT INTO contactos (codigousu, nombre, apellidos, telefono, email, emoji, fecha)
              VALUES (:cod, :nom, :ape, :tlf, :email, :emoji,CURDATE())");
+        
         foreach($contactos as $i =>$j){
             $emoji=$_SESSION['listaDef'][$i];
              $stmt->execute([
@@ -30,12 +31,14 @@ if(!empty($_SESSION['contactos_lote'])){
                 ':emoji' => $emoji
              ]);
         }
+
         $pdo->commit();
         $sql_select="SELECT COUNT(*) AS total_agenda FROM contactos WHERE codigousu = :cod";
         $stmt = $pdo->prepare($sql_select);
         $stmt->execute([
          ':cod' => $codigo
         ]);    
+        
         $total=$stmt->fetchColumn();
 
           if ($pdo->inTransaction()) {
@@ -53,8 +56,8 @@ if(!empty($_SESSION['contactos_lote'])){
 </head>
 <body>
     <h1>AGENDAS CONTACTOS</h1>
-    <p>Usuario: <?= $_SESSION['nombre']; ?></p>
-    <p>Se han grabado <?= $_SESSION['pulsa']; ?> en tu agenda <?= $emoji; ?></p>
+    <p>Usuario: <?= htmlspecialchars($_SESSION['nombre']); ?></p>
+    <p>Se han grabado <?= htmlspecialchars($_SESSION['pulsa']); ?> en tu agenda <?= $emoji; ?></p>
     <p>Tu agenda tiene ahora <?= $total; ?> contactos</p>
     
     <a href="inicio.php">Grabar más contactos</a>

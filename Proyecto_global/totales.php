@@ -1,16 +1,20 @@
 <?php
 session_start();
 require_once'conexion.php';
+
 $sumatorio=0;
 $estilo="";
+
     $sql = "SELECT u.codigo, COUNT(c.codigousu)AS total_contactos, u.nombre,MAX(c.fecha)AS ultima
     FROM usuarios u
     LEFT JOIN contactos c ON c.codigousu = u.codigo
     GROUP BY u.codigo
     ORDER BY total_contactos DESC, u.nombre ASC";
+    
     $stmt=$pdo->prepare($sql);
     $stmt->execute();
     $filas=$stmt->fetchAll();
+
     foreach($filas as $datos){
         $sumatorio+=$datos['total_contactos'];
     }
@@ -24,7 +28,7 @@ $estilo="";
 </head>
 <body>
     <h1>AGENDA - Totales</h1>
-    <p> <?= $_SESSION['nombre'];?>, estos son los contactos guardados: </p>
+    <p> <?= htmlspecialchars($_SESSION['nombre']);?>, estos son los contactos guardados: </p>
     <table style="border:3px solid black;">
         <tr>
             <td style="border:3px solid black;">Cód.</td>
@@ -34,8 +38,8 @@ $estilo="";
             <td style="border:3px solid black;">Último alta</td>
             <td style="border:3px solid black;">Gráfica</td>
         </tr>
-                <?php
-            foreach($filas as $datos){
+            <?php
+                foreach($filas as $datos){
                 $porcentaje=$datos['total_contactos']/$sumatorio;
                 if($datos['nombre']=="admin"){
                     continue;
@@ -46,7 +50,7 @@ $estilo="";
                 }
                 $porcentaje=$porcentaje*100;
                 $porcentaje=number_format($porcentaje,1);
-        ?>
+            ?>
         <tr style="<?= $estilo; ?>">
             <td style="border:3px solid black;"><?= $datos['codigo']??"----" ;?></td>
             <td style="border:3px solid black;"><?= $datos['nombre'] ??"----";?></td>
@@ -58,12 +62,11 @@ $estilo="";
                 <rect width="<?= $datos['total_contactos']; ?>" height="14" y="3" fill="#0085c7" rx="2" />
             </svg>
             </td>
-        <?php
+            <?php
                 }
-        ?>
+            ?>
         </tr>
     </table>
-<a href="agenda.php">Grabar más contactos</a>    <a href="salir.php">Cerrar sesión</a>
-
+    <a href="agenda.php">Grabar más contactos</a>    <a href="salir.php">Cerrar sesión</a>
 </body>
 </html>

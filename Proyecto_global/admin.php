@@ -1,16 +1,19 @@
 <?php
 session_start();
 require_once 'conexion.php';
+
 $errorLote = "";
 $errorEmojis = "";
 $errorContactos = "";
 $max_lote=0;
 $num_emoji=0;
 $max_contactos=0;
+
 if($_SERVER['REQUEST_METHOD']==="POST"){
     $campoLote=$_POST['nLote'];
     $campoEmojis=$_POST['nEmojis'];
     $campoContactos=$_POST['nContactos'];
+
         function validarLote(string $a, int $min, int $max):string{
             $error="";
          if (!isset($a) || $a === "") { 
@@ -23,8 +26,9 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
            }elseif($a<$min && $a>$max){
               $error="Número tiene que estar dentro del rango";
             }
-                return $error;
+            return $error;
         }
+
         function validarEmojis(string $b, int $min, int $max):string{
           $error="";
           if (!isset($b) || $b === "") {
@@ -36,8 +40,9 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
           }elseif($b<$min && $b>$max){
                 $error="Número tiene que estar dentro del rango";
             }   
-                return $error;
+            return $error;
         }
+
         function validarContactos(string $c,int $min, int $max):string{
           $error="";
           if (!isset($c) || $c === "") {
@@ -49,26 +54,23 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
           }elseif($c<$min && $c>$max){
                $error="Número tiene que estar dentro del rango";
              }
-            
             return $error;
         }
+        
         $errorLote=validarLote($campoLote,3,8);
         $errorEmojis=validarEmojis($campoEmojis,4,10);
         $errorContactos=validarContactos($campoContactos,10,100);
-/*
-Realizar un insert con los datos que se meten en los campos
 
-*/
-  $sql_insert ="INSERT INTO configuracion(id,max_lote,num_emojis,max_contactos)
-  VALUES (:id,:nlote,:nemo,:ncont)";
-        $stmt=$pdo->prepare($sql_insert);
-        $stmt->execute([
-        'id'=>$contador++,
-        'nlote'=>$campoLote,
-        'nemo'=>$campoEmojis,
-        'ncont'=>$campoContactos
-        ]);
-        header("Location: index.php");
+    $sql_insert ="INSERT INTO configuracion(id,max_lote,num_emojis,max_contactos)
+    VALUES (:id,:nlote,:nemo,:ncont)";
+            $stmt=$pdo->prepare($sql_insert);
+            $stmt->execute([
+            'id'=>$contador++,
+            'nlote'=>$campoLote,
+            'nemo'=>$campoEmojis,
+            'ncont'=>$campoContactos
+            ]);
+            header("Location: index.php");
 }else{
     $sql_select="SELECT max_lote,num_emojis,max_contactos FROM configuracion ORDER BY id DESC LIMIT 1";
     $stmt=$pdo->prepare($sql_select);
@@ -90,20 +92,20 @@ Realizar un insert con los datos que se meten en los campos
 <body>
     <h1>Panel de Administración</h1>
     <form action="" method="POST">
-        <p> Conectado como: <b><?= $_SESSION['nombre']; ?></b> | <a href="salir.php">Cerrar sesión</a></p>    
+        <p> Conectado como: <b><?= htmlspecialchars($_SESSION['nombre']); ?></b> | <a href="salir.php">Cerrar sesión</a></p>    
         <label for="lote">Contactos por lote (3-8): 
-        <input type="text" name="nLote"> <?= $max_lote; ?></label>
+        <input type="text" name="nLote"> <?= htmlspecialchars($max_lote); ?></label>
         <div>*<?= $errorLote; ?></div>
         <br></br>
 
         <label for="lote">Emojis disponible (4-10): 
-        <input type="text" name="nEmojis"> <?= $num_emoji; ?></label>
+        <input type="text" name="nEmojis"> <?= htmlspecialchars($num_emoji); ?></label>
         <div>*<?= $errorEmojis; ?></div>
 
         <br></br>
 
         <label for="lote">Máx. contactos por usuarios (10-100): 
-        <input type="text" name="nContactos"> <?= $max_contactos; ?></label>
+        <input type="text" name="nContactos"> <?= htmlspecialchars($max_contactos); ?></label>
         <div>*<?= $errorContactos;?></div>
         <br></br>
 

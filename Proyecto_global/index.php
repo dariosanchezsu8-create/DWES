@@ -1,22 +1,34 @@
 
 <?php
+/**
+ * @author Darío Sánchez Suárez
+ * @version 1.0
+ * @since 22/11/2026
+ * @link https://github.com/dariosanchezsu8-create/DWES.git
+ */
+
+
 session_start();
 require_once 'conexion.php';
+
 if($_SERVER['REQUEST_METHOD']==="POST"){
     if(isset($_POST['nombre']) && isset($_POST['pwd'])){
         $_SESSION['nombre']=$_POST['nombre'];
         $_SESSION['pwd']=$_POST['pwd'];
+
         $sql ="SELECT codigo, nombre , clave, rol FROM usuarios";
         $stmt=$pdo->prepare($sql);
         $stmt->execute();
+
         while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $pwdBD=password_hash($fila['clave'],PASSWORD_DEFAULT);
-        if($fila['nombre']==$_SESSION['nombre'] && password_verify($_SESSION['pwd'], $pwdBD)) {
-            session_regenerate_id(true);
-            $_SESSION['rol']=$fila['rol'];
-            $_SESSION['cod']=$fila['codigo'];
-            header("Location: seguridad.php");
-            exit();
+        
+            if($fila['nombre']==$_SESSION['nombre'] && password_verify($_SESSION['pwd'], $pwdBD)) {
+                session_regenerate_id(true);
+                $_SESSION['rol']=$fila['rol'];
+                $_SESSION['cod']=$fila['codigo'];
+                header("Location: seguridad.php");
+                exit();
             }
        }
           echo "<p style='color:red;'>Usuario o clave incorrectos.</p>";
@@ -42,8 +54,9 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
         <br></br>
         <button type="submit" name="iniciar_sesion">Entrar</button>
     </form>
-        <form action="registro.php" method="POST">
-            <button type="submit" name="registrar">Registrarse</button>
-        </form>
+
+    <form action="registro.php" method="POST">
+        <button type="submit" name="registrar">Registrarse</button>
+    </form>
 </body>
 </html>

@@ -1,18 +1,15 @@
 <?php
-// FASE 2: un bloque de formulario por cada emoji del lote (el nº sale SIEMPRE de la sesión).
 session_start();
 require_once 'funciones.php';
 
 $pulsaciones = $_SESSION['pulsa'];
 $listaDef=$_SESSION['listaDef'];
-$contactos = [];   // valores escritos por el usuario
-$errores = [];     // errores por contacto: $errores[$i]['email'][] = '...'
+$contactos = [];   
+$errores = [];     
 
-// Si se pulsó "Grabar contactos": validamos todos los bloques
 if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['gc'])) {
     $hayErrores = false;
     for ($i = 0; $i < $pulsaciones; $i++) {
-        // Si el navegador no envió ese bloque, usamos un array vacío (daría errores de "campo vacío")
         $c = (isset($_POST['contactos'][$i]) && is_array($_POST['contactos'][$i])) ? $_POST['contactos'][$i] : [];
         $contactos[$i] = $c;
         $errores[$i] = validarContacto($c);
@@ -21,9 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['gc'])) {
         }
     }
 
-    // Todo correcto: guardamos los contactos validados en sesión y pasamos a grabado.php,
-    // que es quien los inserta en la BD.
-    if (!$hayErrores) {
+    if ($hayErrores==false) {
         $_SESSION['contactos_lote'] = $contactos;
         header("Location: grabado.php");
         exit();
@@ -43,10 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['gc'])) {
 
     <form action="" method="POST">
         <?php
-        // Un bloque por emoji. Si es la primera vez, $contactos y $errores están vacíos
-        // y el formulario sale en blanco; si hubo errores, conserva lo escrito y muestra los errores.
         for ($i = 0; $i <$pulsaciones;$i++) {
-            echo pintarFormularioContacto($i, $listaDef[$i], $contactos[$i] ?? [], $errores[$i] ?? []);
+            echo (string) pintarFormularioContacto($i, $listaDef[$i], $contactos[$i] ?? [], $errores[$i] ?? []);
         }
         ?>
         <button type="submit" name="gc">Grabar contactos</button>

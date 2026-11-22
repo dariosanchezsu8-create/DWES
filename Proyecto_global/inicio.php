@@ -6,14 +6,16 @@ require_once 'funciones.php';
 $pulsaciones = $_SESSION['pulsa'] ?? 0;
 $listaDef=[];
 $valores=$_SESSION['valores']??'';
+
     $sql ="SELECT max_lote,num_emojis,max_contactos FROM configuracion ORDER BY id DESC  LIMIT 1";
         $stmt=$pdo->prepare($sql);
         $stmt->execute();
          while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
             if (empty($_SESSION['listaDef'])) {
-        $_SESSION['listaDef'] = emojiAleatorio(emojisDisponibles((int)$fila['max_lote']));
+                $_SESSION['listaDef'] = emojiAleatorio(emojisDisponibles((int)$fila['max_lote']));
             }
-        $listaDef = $_SESSION['listaDef'];
+            
+            $listaDef = $_SESSION['listaDef'];
         if($_SERVER['REQUEST_METHOD']==="POST"){
             if($pulsaciones<$fila['max_lote']){
                $listaDef[$pulsaciones];
@@ -41,7 +43,7 @@ $valores=$_SESSION['valores']??'';
 </head>
 <body>
     <h1>AGENDAS DE CONTACTOS</h1>
-    <p>Usuario: <?=$_SESSION['nombre']; ?> · Contactos a grabar: <?= $_SESSION['pulsa'];?></p>
+    <p>Usuario: <?=htmlspecialchars($_SESSION['nombre']); ?> · Contactos a grabar: <?= htmlspecialchars($_SESSION['pulsa']);?></p>
     <form action="" method="POST">
         <table>
             <tr>
@@ -56,5 +58,5 @@ $valores=$_SESSION['valores']??'';
 </body>
 </html>
 <?php
-         }
-         ?>
+    }
+?>
