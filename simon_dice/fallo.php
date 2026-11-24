@@ -5,24 +5,6 @@ $n1=$_SESSION['n_uno'] ?? 0;
 $inicial=$_SESSION['combi_inicial'] ?? [];
 $final=$_SESSION['combi_Final'] ?? [];
 
-// //EN ESTE ULTIMO FICHERO SE COMPARARÁ LAS DOS COMBINACIONES
-// // E IMPRIMIR UN MENSAJE CUAL SEA
-// if ($_SERVER["REQUEST_METHOD"] === "POST") {
-//     if(isset($_SESSION['combi_inicial']) && isset($_SESSION['combi_Final'])){
-// $n1=$_SESSION['circulos']?? 0;
-// $inicial=$_SESSION['combi_inicial'];
-// $final=$_SESSION['combi_Final'];
-// $contador=0; 
-// $_SESSION['contador']=$contador;
-
-// for($i=0;$i<$n1;$i++){ 
-//     if($inicial[$i]===$final[$i]){
-//         $_SESSION['contador']++;
-//         }
-//       }
-//    }
-//}
-
 
 if($_SERVER['REQUEST_METHOD']==="GET"){
 //2.Comprobar que el usuario existe con la select
@@ -54,15 +36,7 @@ while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
     <title>Document</title>
 </head>
 <body style="background-color:<?=$_COOKIE['col'] ?? "#808080"; ?>;">
-    <?php
-    //  if($_SESSION['contador']==$n1){    
-    // echo '<h1>Enhorabuena Paco, has acertado 🎉✨✨</h1> ';
-    // session_destroy();   
-    //  }else{    
-    // session_destroy();   
-    // echo '<h1>Patrón equivocado</h1>';    
-    // }
-    ?>
+
  <h1>Patrón equivocado❌❗❗</h1>    
    <table>
         <tr>

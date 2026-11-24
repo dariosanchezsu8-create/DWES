@@ -1,11 +1,7 @@
 <?php
-// 1. Abrimos la puerta de la sesión que trae el navegador
 session_start();
-// 2. Limpiamos todas las variables que había dentro (como 'tener', 'crcl', etc.)
 session_unset(); 
-// 3. Destruimos la sesión por completo
 session_destroy(); 
-// (Opcional) Si quieres volver a empezar una sesión limpia para el nuevo juego:
 session_start();
 require_once 'conexion.php';
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -34,16 +30,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
       echo "<p style='color:red;'>Usuario o clave incorrectos.</p>";
     }
   }
-
-/*
-Aqui en primer lugar el usuario metera los datos donde corresponda
-despues se comprobara con un select si existe el usuario en la base de datos
-en caso de que no saltara un error de registrarse.
-En caso de que si entonces con el boton Iniciar Sesion entrenara
-en el juego del simon dice
-*/
-
-
 
 
 ?>

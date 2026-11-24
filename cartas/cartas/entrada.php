@@ -5,7 +5,9 @@ require_once('autenticacion.php');
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $login = $_POST["login"];
     $clave = $_POST["clave"];
-        if(true){
+
+    if (autenticarUsuario($login, $clave)) {
+        // Usuario autenticado, establecer la sesión y redirigir a la página principal
         $_SESSION["login"] = $login;
         header("Location: mostrarcartas.php");
         exit();
@@ -40,5 +42,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <input type="submit" value="Entrar">
     </form>
+
 </body>
 </html>
